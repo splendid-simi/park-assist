@@ -2,24 +2,69 @@
 
 var gulp = require('gulp');
 var nodemon = require('gulp-nodemon');
-var bs = require('browser-sync');
+var bs = require('browser-sync').create();
+var browserify = require('gulp-browserify');
+var sass = require('gulp-sass');
+var sourcemaps = require('gulp-sourcemaps');
+var concat = require('gulp-concat');
+var autoprefixer = require('gulp-autoprefixer');
+var cssmin = require('gulp-minify-css');
 var reload = bs.reload;
 
 // define paths to app files
 var paths = {
-  // client app js files
-  scripts: ['client/app/**/*.js'],
-  html: ['client/app/**/*.html', 'client/index.html'],
-  style: ['client/style/style.css']
+  dist: 'client/dist',
+  scripts: ['client/src/**/*.js'],
+  app: ['client/src/app.js'],
+  html: ['client/**/*.html'],
+  scss: ['client/src/**/*.scss'],
+  styles: ['client/lib/normalize.css/normalize.css', 'client/lib/angular-material/angular-material.css', 'client/src/style.css']
 };
 
-// changes to client-side codes will trigger browser refresh
-gulp.task('start', ['serve'], function() {
-  bs({
-    notify: true, 
-    injectChanges: true, 
-    files: paths.scripts.concat(paths.html, paths.styles),
-    proxy: 'localhost:8000'
+gulp.task('js', function() {
+  return gulp.src(paths.app)
+    .pipe(browserify({
+      debug: true
+    }))
+    .pipe(gulp.dest(paths.dist))
+    .pipe(bs.stream());
+});
+
+gulp.task('scss', function() {
+  return gulp.src('client/src/scss/style.scss')
+    .pipe(sourcemaps.init())
+    .pipe(sass())
+    .pipe(autoprefixer({
+      browsers: [
+        'last 2 versions',
+        'safari 5',
+        'ie 8',
+        'ie 9',
+        'android 4'
+      ]
+    }))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest('client/src'));
+});
+
+gulp.task('css', function() {
+  return gulp.src(paths.styles)
+    .pipe(concat('style.css'))
+    .pipe(cssmin())
+    .pipe(gulp.dest(paths.dist))
+    .pipe(bs.stream());
+});
+
+gulp.task('watch', function() {
+  gulp.watch(paths.html).on('change', reload);
+  gulp.watch(paths.scripts, ['js']);
+  gulp.watch(paths.scss,['scss']);
+  gulp.watch(paths.styles,['css']);
+});
+
+gulp.task('browser-sync', function() {
+  bs.init({
+      proxy: "localhost:8000"
   });
 });
 
@@ -29,4 +74,4 @@ gulp.task('serve', function() {
 });
 
 // default task call 'start', which calls serve
-gulp.task('default', ['start']);
+gulp.task('default', ['serve', 'browser-sync', 'js', 'scss', 'css', 'watch']);
