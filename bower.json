@@ -1,0 +1,22 @@
+{
+  "name": "MKS20-site-deploy",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/epps/MKS20-site-deploy",
+  "authors": [
+    "Erik Eppel <eceppel@gmail.com>"
+  ],
+  "description": "Boilerplate for personal site deploy assignment",
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3"
+  }
+}
