@@ -27,8 +27,6 @@ map.factory('Geocoder', [function() {
     return deferred.promise;
   };
 
-
-
   return {
     parseLatLng: parseLatLng
   };

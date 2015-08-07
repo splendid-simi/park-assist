@@ -1,7 +1,7 @@
 var marker = angular.module('parkAssist.marker');
 var InfoBubble = require('InfoBubble');
 
-marker.factory('Markers', ['Geocoder', function(Geocoder) {
+marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
 
   var markers = [];
 
