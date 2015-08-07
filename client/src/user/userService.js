@@ -1,9 +1,8 @@
 var user = angular.module('parkAssist.user');
-var Q = require('q');
 
 user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(Directions, DirectionsDisplay, UserMarker) {
 
-  var userLocation;
+  var userLocation, userDestination;
 
   var userLocationOptions = {
     enableHighAccuracy: true,
@@ -11,44 +10,46 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
     maximumAge: 0
   };
 
-  var calcRoute = function(lat,long) {
+  var setDestination = function(latLng) {
+    userDestination = latLng;
+  };
+
+  var calcRoute = function() {
     var request = {
       origin: userLocation,
-      destination: new google.maps.LatLng(lat, long),
+      destination: userDestination,
       travelMode: google.maps.TravelMode.DRIVING
     };
 
     Directions.route(request, function(response, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        console.log('Distance: ', response.routes[0].legs[0].distance.text);
+      if ( status == google.maps.DirectionsStatus.OK ) {
         DirectionsDisplay.setDirections(response);
       }
     });
   };
 
   var watchPosition = function(map) {
-    var deferred = Q.defer();
-
     window.navigator.geolocation.watchPosition(function(pos) {
+
       userLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-      console.log('You moved!', userLocation);
+
       map.panTo(userLocation);
 
+      calcRoute();
+
       if( !UserMarker.getMarker() ) {
-        UserMarker.addMarker(map,true,userLocation);
+        UserMarker.addMarker(map, true, userLocation);
       } else {
         UserMarker.getMarker().setPosition(userLocation);
       }
       
-      deferred.resolve(userLocation);
     }, null, userLocationOptions);
-
-    return deferred.promise;
   };
 
   return {
     watchPosition: watchPosition,
-    calcRoute: calcRoute
+    calcRoute: calcRoute,
+    setDestination: setDestination
   };
 
 }]);

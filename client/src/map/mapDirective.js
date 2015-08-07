@@ -1,13 +1,10 @@
 var map = angular.module('parkAssist.map');
 
-map.directive('map', ['User', 'UserMarker', 'MeterMarkers', 'DirectionsDisplay', 'Directions', function(User, UserMarker, MeterMarkers, DirectionsDisplay, Directions) {
+map.directive('map', ['User', 'UserMarker', 'MeterMarkers', 'DirectionsDisplay', function(User, UserMarker, MeterMarkers, DirectionsDisplay) {
 
   var center;
 
   var initialize = function(element) {
-
-    var directionsDisplay = DirectionsDisplay;
-    var directionsService = Directions;
 
     var mapOptions = {
       zoom: 17,
@@ -17,13 +14,15 @@ map.directive('map', ['User', 'UserMarker', 'MeterMarkers', 'DirectionsDisplay',
     };
 
     var map = new google.maps.Map(element[0], mapOptions);
-    directionsDisplay.setMap(map);
+    DirectionsDisplay.setMap(map);
 
-    User.watchPosition(map).then(function(userLocation) {
-      var testLoc = new google.maps.LatLng(34.039409,-118.442925);
-      User.calcRoute(testLoc.G, testLoc.K);
-      MeterMarkers.addMarker(map,true,testLoc);
-    });
+    // meter location
+    var meterLoc = new google.maps.LatLng(34.039409,-118.442925);
+
+    User.setDestination(meterLoc);
+    MeterMarkers.addMarker(map,true,meterLoc);
+
+    User.watchPosition(map);
 
     google.maps.event.addDomListener(map, 'idle', function() {
       center = map.getCenter();
