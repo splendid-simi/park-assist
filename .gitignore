@@ -1,4 +1,6 @@
 .DS_Store
 
 node_modules/
-client/lib
+client/lib/*
+
+!client/lib/infobubble.js
