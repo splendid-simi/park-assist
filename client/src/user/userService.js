@@ -33,10 +33,13 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
       userLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
       console.log('You moved!', userLocation);
       map.panTo(userLocation);
-      
-      UserMarker.addMarker(map,true,userLocation);
-      UserMarker.getMarker().setPosition(userLocation);
 
+      if( !UserMarker.getMarker() ) {
+        UserMarker.addMarker(map,true,userLocation);
+      } else {
+        UserMarker.getMarker().setPosition(userLocation);
+      }
+      
       deferred.resolve(userLocation);
     }, null, userLocationOptions);
 
