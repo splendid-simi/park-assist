@@ -1,7 +1,7 @@
 var user = angular.module('parkAssist.user');
 var Q = require('q');
 
-user.factory('User', ['Directions', 'DirectionsDisplay', function(Directions, DirectionsDisplay) {
+user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(Directions, DirectionsDisplay, UserMarker) {
 
   var userLocation;
 
@@ -33,6 +33,10 @@ user.factory('User', ['Directions', 'DirectionsDisplay', function(Directions, Di
       userLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
       console.log('You moved!', userLocation);
       map.panTo(userLocation);
+      
+      UserMarker.addMarker(map,true,userLocation);
+      UserMarker.getMarker().setPosition(userLocation);
+
       deferred.resolve(userLocation);
     }, null, userLocationOptions);
 

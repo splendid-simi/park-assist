@@ -1,6 +1,8 @@
 var map = angular.module('parkAssist.map');
 
-map.directive('map', ['User', 'Markers', 'DirectionsDisplay', 'Directions', function(User, Markers, DirectionsDisplay, Directions) {
+map.directive('map', ['User', 'UserMarker', 'MeterMarkers', 'DirectionsDisplay', 'Directions', function(User, UserMarker, MeterMarkers, DirectionsDisplay, Directions) {
+
+  var center;
 
   var initialize = function(element) {
 
@@ -18,8 +20,17 @@ map.directive('map', ['User', 'Markers', 'DirectionsDisplay', 'Directions', func
     directionsDisplay.setMap(map);
 
     User.watchPosition(map).then(function(userLocation) {
-      // User.calcRoute(34.0519, -118.5894);
-      // Markers.addMarker(map,true,userLocation,'hey');
+      var testLoc = new google.maps.LatLng(34.039409,-118.442925);
+      User.calcRoute(testLoc.G, testLoc.K);
+      MeterMarkers.addMarker(map,true,testLoc);
+    });
+
+    google.maps.event.addDomListener(map, 'idle', function() {
+      center = map.getCenter();
+    });
+
+    google.maps.event.addDomListener(window, 'resize', function() {
+      map.setCenter(center);
     });
 
   };
