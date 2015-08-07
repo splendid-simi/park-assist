@@ -1,12 +1,12 @@
 {
-  "name": "MKS20-site-deploy",
+  "name": "Park-Assist",
   "version": "1.0.0",
-  "description": "Week 5 assignment to deploy a personal website to Heroku",
+  "description": "Park Here",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Erik Eppel",
+  "author": "Splendid Simi",
   "license": "ISC",
   "devDependencies": {
     "browser-sync": "^2.8.2",
@@ -21,6 +21,7 @@
     "gulp-sourcemaps": "^1.5.2"
   },
   "dependencies": {
-    "express": "^4.13.2"
+    "express": "^4.13.2",
+    "q": "^1.4.1"
   }
 }
