@@ -11,6 +11,7 @@
   "devDependencies": {
     "browser-sync": "^2.8.2",
     "browserify": "^11.0.1",
+    "browserify-shim": "^3.8.10",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-browserify": "^0.5.1",
@@ -23,5 +24,16 @@
   "dependencies": {
     "express": "^4.13.2",
     "q": "^1.4.1"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
+  "browser": {
+    "InfoBubble": "./client/lib/infobubble.js"
+  },
+  "browserify-shim": {
+    "InfoBubble": "InfoBubble"
   }
 }

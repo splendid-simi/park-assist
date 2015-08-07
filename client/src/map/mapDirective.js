@@ -1,6 +1,6 @@
 var map = angular.module('parkAssist.map');
 
-map.directive('map', ['User', 'DirectionsDisplay', 'Directions', function(User, DirectionsDisplay, Directions) {
+map.directive('map', ['User', 'Markers', 'DirectionsDisplay', 'Directions', function(User, Markers, DirectionsDisplay, Directions) {
 
   var initialize = function(element) {
 
@@ -18,8 +18,8 @@ map.directive('map', ['User', 'DirectionsDisplay', 'Directions', function(User, 
     directionsDisplay.setMap(map);
 
     User.watchPosition(map).then(function(userLocation) {
-      console.log(userLocation);
-      User.calcRoute(34.0519, -118.5894);
+      // User.calcRoute(34.0519, -118.5894);
+      // Markers.addMarker(map,true,userLocation,'hey');
     });
 
   };
