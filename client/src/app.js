@@ -9,3 +9,4 @@ ParkAssist.config(['$urlRouterProvider', function($urlRouterProvider) {
   $urlRouterProvider
     .otherwise('/');
 }]);
+
