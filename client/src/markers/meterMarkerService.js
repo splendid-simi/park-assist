@@ -42,7 +42,7 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
     marker = new google.maps.Marker({
       active: active,
       position: LatLng,
-      icon: '../../img/instagram.png',
+      icon: '../../img/parking.png',
       animation: google.maps.Animation.DROP,
       map: map
     });

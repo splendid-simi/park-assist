@@ -12,6 +12,7 @@ marker.factory('UserMarker', [function() {
     marker = new google.maps.Marker({
       active: active,
       position: LatLng,
+      icon: '../../img/car.png',
       animation: google.maps.Animation.DROP,
       map: map
     });
