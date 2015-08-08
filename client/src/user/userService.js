@@ -32,7 +32,7 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
     };
 
     Directions.route(request, function(response, status) {
-      if ( status == google.maps.DirectionsStatus.OK ) {
+      if ( status === google.maps.DirectionsStatus.OK ) {
         DirectionsDisplay.setDirections(response);
         routeInitialized = true;
       }

@@ -1,17 +1,11 @@
 var map = angular.module('parkAssist.map');
+var mapOptions = require('./mapOptions');
 
 map.directive('map', ['User', 'UserMarker', 'MeterMarkers', 'DirectionsDisplay', function(User, UserMarker, MeterMarkers, DirectionsDisplay) {
 
   var center;
 
   var initialize = function(element) {
-
-    var mapOptions = {
-      zoom: 17,
-      minZoom: 3,
-      maxZoom: 25,
-      center: {lat: 34.0219, lng: -118.4814}
-    };
 
     var map = new google.maps.Map(element[0], mapOptions);
     DirectionsDisplay.setMap(map);
