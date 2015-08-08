@@ -3,14 +3,43 @@ var InfoBubble = require('InfoBubble');
 
 marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
 
-  var markers = [];
+  var marker, infoBubble;
+
+  var addInfoBubble = function(map, imgSrc, address) {
+    var bubbleContent = '<div class="info-bubble">'+
+      '<img src="'+imgSrc+'" />' +
+      '<p>'+address+'</p>'+
+      '</div>';
+
+    return new InfoBubble({
+      content: bubbleContent,
+      maxWidth: 150,
+      shadowStyle: 1,
+      padding: 0,
+      backgroundColor: '#fefefc',
+      borderRadius: 5,
+      arrowSize: 10,
+      borderWidth: 2,
+      borderColor: '#fefefc',
+      disableAutoPan: true,
+      hideCloseButton: true,
+      arrowPosition: 30,
+      arrowStyle: 2,
+      map: map
+    });
+  };
 
   var addMarker = function(map, active, LatLng) {
 
     var lat = LatLng.G;
     var long = LatLng.K;
 
-    var marker = new google.maps.Marker({
+    if(marker) {
+      infoBubble.close();
+      marker.setMap(null);
+    }
+
+    marker = new google.maps.Marker({
       active: active,
       position: LatLng,
       icon: '../../img/instagram.png',
@@ -22,32 +51,10 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
 
     Geocoder.parseLatLng(lat,long).then(function(address) {
 
-      var contentString = '<div class="info-bubble">'+
-        '<img src="' + imgSrc + '" />' +
-        '<p>'+ address +'</p>'+
-        '</div>';
-
-      var infoBubble = new InfoBubble({
-        content: contentString,
-        maxWidth: 400,
-        minHeight: 0,
-        shadowStyle: 1,
-        padding: 0,
-        backgroundColor: '#fefefc',
-        borderRadius: 5,
-        arrowSize: 10,
-        borderWidth: 2,
-        borderColor: '#fefefc',
-        disableAutoPan: true,
-        hideCloseButton: true,
-        arrowPosition: 30,
-        backgroundClassName: 'transparent',
-        arrowStyle: 2,
-        map: map
-      });
+      infoBubble = addInfoBubble(map,imgSrc,address);
 
       infoBubble.open(map, marker);
-
+        
       google.maps.event.addListener(marker, 'click', function() {
         infoBubble.open(map, marker);
       });
@@ -58,7 +65,6 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
 
     });
 
-    markers.push(marker);
   };
 
   return {

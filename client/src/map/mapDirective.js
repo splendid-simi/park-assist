@@ -19,8 +19,14 @@ map.directive('map', ['User', 'UserMarker', 'MeterMarkers', 'DirectionsDisplay',
     // meter location
     var meterLoc = new google.maps.LatLng(34.039409,-118.442925);
 
-    User.setDestination(meterLoc);
     MeterMarkers.addMarker(map,true,meterLoc);
+    User.setDestination(meterLoc);
+
+    // setTimeout(function(){
+    //   var meterLoc = new google.maps.LatLng(34.069409,-118.442925);
+    //   MeterMarkers.addMarker(map,true,meterLoc);
+    //   User.setDestination(meterLoc);
+    // },5000);
 
     User.watchPosition(map).then(function(userLocation) {
       map.panTo(userLocation);

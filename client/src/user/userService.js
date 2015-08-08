@@ -15,6 +15,9 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
   var setDestination = function(latLng) {
     userDestination = latLng;
     routeInitialized = false;
+    if(userLocation) {
+      calcRoute();
+    }
   };
 
   var calcRoute = function() {
