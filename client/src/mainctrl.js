@@ -2,8 +2,10 @@ angular.module('park', ['park.services', 'firebase'])
 .controller("mainController", ['Comm', function (Comm) {
 	var main = this;
 	
-	main.latitude = 0;
-	main.longitude = 0;
+	//change to 0
+	main.latitude = 34.018574;
+	main.longitude = -118.486929;
+	main.range = 0.25;
 
 	//Firebase Interactivity
 	// main.firedb = new Firebase('https://px7n504ycdj.firebaseio-demo.com/');
@@ -11,8 +13,8 @@ angular.module('park', ['park.services', 'firebase'])
 	main.submit = function() {
 		console.log("main.submit says: Co ordinates entered: (", main.latitude, ',', main.longitude, ')');
 		
-		//Comm.getspots([main.latitude, main.longitude]);
-		Comm.init();
+		Comm.getspots([main.latitude, main.longitude],main.range);
+		//Comm.init();
 
 	}
 

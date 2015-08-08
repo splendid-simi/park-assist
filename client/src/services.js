@@ -1,13 +1,16 @@
 angular.module('park.services', ['firebase']) 
 
 .factory('Comm', function ($http){
-	var getspots = function (tuple) {
+	var getspots = function (tuple, range) {
 		console.log('services.js says: getspots called, tuple:', tuple);
 
 		return $http({
 			method: 'POST',
 			url: '/api/getspots',
-			data: tuple
+			data: {
+				location: tuple,
+				range: range
+			}
 		})
 		.then(function(resp) {
 			console.log('services.js says: POST successful. response:',resp);

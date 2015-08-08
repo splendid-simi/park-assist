@@ -19,14 +19,14 @@ var firedb = new Firebase("https://px7n504ycdj.firebaseio-demo.com");
 //POST /api/getspots
 app.post('/api/getspots', function(req,res) {
 	console.log('server.js says: POST request received! body:', req.body);
-	var userLocation = req.body;
+	var userLocation = req.body.location;
 
 	//Make a GET request to the storage in database
 	firedb.child("Metered Parking Spots").on("value", function (snapshot) {
 		//console.log("Fetched all spots:",snapshot.val());
 		
 		//Make a result of feasible parking spots
-		var radius = 1;						//proximity radius in miles (DEFAULTED for now to 1 mile)
+		var radius = req.body.range;						//proximity radius in miles (DEFAULTED for now to 1 mile)
 		var pSpots = snapshot.val();		//All the parking spots
 		var closeSpots = [];				//Ones that are within the euclidean distance
 		var freeSpots = [];					//Ones that are currently available to park
@@ -49,8 +49,8 @@ app.post('/api/getspots', function(req,res) {
 
 		for(var i=0; i<closeSpots.length; i++) {
 			//check for whether the spot is active, followed by whether it is free
-			console.log('*************************')
-			console.log('Testing for parking spot:', closeSpots[i].meter_id);
+			//console.log('*************************')
+			//console.log('Testing for parking spot:', closeSpots[i].meter_id);
 			var meterID = closeSpots[i].meter_id;
 
 			var checkParkingSpot = function(obj,res) {
@@ -59,7 +59,7 @@ app.post('/api/getspots', function(req,res) {
 					if(error) { console.log('Error while checking whether meter:active'); }
 					if (!error && response.statusCode === 200) {
 			  			body = JSON.parse(body);
-			  			console.log('Data from SMGov API (meter:active):', body);
+			  			//console.log('Data from SMGov API (meter:active):', body);
 
 			  			if(body.active) {
 				  			//if active, check for meter:'available'
@@ -67,20 +67,20 @@ app.post('/api/getspots', function(req,res) {
 				  				if(error) { console.log('Error while checking for meter:available'); }
 				  				if(!error && response.statusCode === 200) {
 				  					body = JSON.parse(body);
-				  					console.log('Data from SMGov API (meter:available):', body);
+				  					//console.log('Data from SMGov API (meter:available):', body);
 									//body.event_type = SS(move in) / SE(move out)
 									if(body.event_type === 'SE') {
 										//add the spot to freespots
 										freeSpots.push(obj);
+										res.send(200, freeSpots);
 									}
 				  				}
 				  			});	//meter:available request ends here
 				  		}
 					}
-				  	numChecks++;
-					if(numChecks === totalCloseSpots) {
-						res.send(200, freeSpots);
-					}
+				 	// numChecks++;
+					// if(numChecks === totalCloseSpots) {
+					// }
 
 				}); //meter:active request ends here
 			}//checkParkingSpot function ends here
@@ -97,7 +97,7 @@ app.post('/api/getspots', function(req,res) {
 //Helper Functions
 //Function to check whether the euclidean distance between a pair of coordinate pairs falls within a desired range
 var isWithinRange = function(latU, longU, latP, longP, radius) {
-	var threshold = radius/4;
+	var threshold = radius;
 	var euDistance = Math.sqrt(Math.pow((latP - latU)*69.1128,2) + Math.pow((longP - longU)*57.2807,2));
 	//console.log('User Location: [',latU, ',', longU, '] ', 'Parking Location: [', latP, ',', longP, '] ', 'Absolute Distance in miles:', euDistance );
 	return euDistance < threshold;
@@ -118,7 +118,7 @@ app.post('/api/init', function(req,res) {
   		if(error) { console.log('Error getting data. Error:', error); }
   		if (!error && response.statusCode == 200) {
   			body = JSON.parse(body);
-  			console.log('Data from SMGov API:', typeof body);
+  			//console.log('Data from SMGov API:', typeof body);
 
   			//One time update of the database with the metered spots info
   			for(var key in body) {
