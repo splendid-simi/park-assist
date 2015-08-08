@@ -22,7 +22,9 @@ map.directive('map', ['User', 'UserMarker', 'MeterMarkers', 'DirectionsDisplay',
     User.setDestination(meterLoc);
     MeterMarkers.addMarker(map,true,meterLoc);
 
-    User.watchPosition(map);
+    User.watchPosition(map).then(function(userLocation) {
+      map.panTo(userLocation);
+    });
 
     google.maps.event.addDomListener(map, 'idle', function() {
       center = map.getCenter();
