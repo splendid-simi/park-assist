@@ -1,7 +1,7 @@
 var map = angular.module('parkAssist.map');
 var mapOptions = require('./mapOptions');
 
-map.directive('map', ['User', 'UserMarker', 'MeterMarkers', 'DirectionsDisplay', function(User, UserMarker, MeterMarkers, DirectionsDisplay) {
+map.directive('map', ['Comm', 'User', 'UserMarker', 'MeterMarkers', 'DirectionsDisplay', function(Comm, User, UserMarker, MeterMarkers, DirectionsDisplay) {
 
   var center;
 
@@ -10,29 +10,63 @@ map.directive('map', ['User', 'UserMarker', 'MeterMarkers', 'DirectionsDisplay',
     var map = new google.maps.Map(element[0], mapOptions);
     DirectionsDisplay.setMap(map);
 
-    // meter location
-    var meterLoc = new google.maps.LatLng(34.039409,-118.442925);
+    //get user's current location
+    window.navigator.geolocation.getCurrentPosition(function(pos) {
+      
+      var tuple = [pos.coords.latitude, pos.coords.longitude];
+      //remove
+      console.log(tuple);
+      var range = 0.2;
+      Comm.getspots(tuple,range)
+      .then(function(spot) {
+        console.log('mapDirective.js says: spot:',spot);
+        // meter location
+        var meterLoc = new google.maps.LatLng(spot[0],spot[1]);
 
-    MeterMarkers.addMarker(map,true,meterLoc);
-    User.setDestination(meterLoc);
 
-    // setTimeout(function(){
-    //   var meterLoc = new google.maps.LatLng(34.069409,-118.442925);
-    //   MeterMarkers.addMarker(map,true,meterLoc);
-    //   User.setDestination(meterLoc);
-    // },5000);
+        MeterMarkers.addMarker(map,true,meterLoc);
+        User.setDestination(meterLoc);
 
-    User.watchPosition(map).then(function(userLocation) {
-      map.panTo(userLocation);
-    });
+        User.watchPosition(map).then(function(userLocation) {
+          map.panTo(userLocation);
+        });
 
-    google.maps.event.addDomListener(map, 'idle', function() {
-      center = map.getCenter();
-    });
+        google.maps.event.addDomListener(map, 'idle', function() {
+          center = map.getCenter();
+        });
 
-    google.maps.event.addDomListener(window, 'resize', function() {
-      map.setCenter(center);
-    });
+        google.maps.event.addDomListener(window, 'resize', function() {
+          map.setCenter(center);
+        });
+      });
+      //-----------------
+
+    }, null);
+
+    // // meter location
+    // var meterLoc = new google.maps.LatLng(34.039409,-118.442925);
+
+
+    // MeterMarkers.addMarker(map,true,meterLoc);
+    // User.setDestination(meterLoc);
+
+    // // setTimeout(function(){
+    // //   var meterLoc = new google.maps.LatLng(34.069409,-118.442925);
+    // //   MeterMarkers.addMarker(map,true,meterLoc);
+    // //   User.setDestination(meterLoc);
+    // // },5000);
+
+    // User.watchPosition(map).then(function(userLocation) {
+    //   map.panTo(userLocation);
+    // });
+
+    // google.maps.event.addDomListener(map, 'idle', function() {
+    //   center = map.getCenter();
+    // });
+
+    // google.maps.event.addDomListener(window, 'resize', function() {
+    //   map.setCenter(center);
+    // });
 
   };
 
