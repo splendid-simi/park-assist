@@ -14,6 +14,8 @@ app.use(express.static(__dirname + './../client'));
 
 //Set up a Firebase
 var firedb = new Firebase("https://px7n504ycdj.firebaseio-demo.com");
+//remove
+// console.log('server.js says: firebase setup.');
 
 //Handle a POST request with coordinates tuple [latitude, longitude]
 //POST /api/getspots
@@ -34,7 +36,7 @@ app.post('/api/getspots', function(req,res) {
 		//Get list of all spots within euclidean distance
 		for( var key in pSpots) {
 			//console.log("Metered Parking Spot:", pSpots[key]);
-			if(isWithinRange(userLocation[0],userLocation[1],pSpots[key].latitude, pSpots[key].longitude, 1)) {
+			if(isWithinRange(userLocation[0],userLocation[1],pSpots[key].latitude, pSpots[key].longitude, radius)) {
 				closeSpots.push(pSpots[key]);
 			}
 		}
@@ -46,48 +48,79 @@ app.post('/api/getspots', function(req,res) {
 		var busy_url_2 = '/events/latest';
 		var numChecks = 0;
 		var totalCloseSpots = closeSpots.length;
+    var done = false;
+
+    //remove
+    console.log('Total number of closeSpots:', closeSpots.length);
 
 		for(var i=0; i<closeSpots.length; i++) {
-			//check for whether the spot is active, followed by whether it is free
-			//console.log('*************************')
-			//console.log('Testing for parking spot:', closeSpots[i].meter_id);
-			var meterID = closeSpots[i].meter_id;
+			//for(var i=0; i<1; i++) {
 
-			var checkParkingSpot = function(obj,res) {
-				//request to check for meter:'active'
-				request(active_url+obj.meter_id, function (error, response, body) {
-					if(error) { console.log('Error while checking whether meter:active'); }
-					if (!error && response.statusCode === 200) {
-			  			body = JSON.parse(body);
-			  			//console.log('Data from SMGov API (meter:active):', body);
+//check for whether the spot is active, followed by whether it is free
+//console.log('*************************')
+//console.log('Testing for parking spot:', closeSpots[i].meter_id);
+var meterID = closeSpots[i].meter_id;
 
-			  			if(body.active) {
-				  			//if active, check for meter:'available'
-				  			request(busy_url_1 + body.meter_id + busy_url_2, function (error, response, body) {
-				  				if(error) { console.log('Error while checking for meter:available'); }
-				  				if(!error && response.statusCode === 200) {
-				  					body = JSON.parse(body);
-				  					//console.log('Data from SMGov API (meter:available):', body);
-									//body.event_type = SS(move in) / SE(move out)
-									if(body.event_type === 'SE') {
-										//add the spot to freespots
-										freeSpots.push(obj);
-										res.send(200, freeSpots);
-									}
-				  				}
-				  			});	//meter:available request ends here
-				  		}
-					}
-				 	// numChecks++;
-					// if(numChecks === totalCloseSpots) {
-					// }
+//Check whether the meter is available
+var filterAvailableOnes = function (obj, res) {
+request(busy_url_1 + obj.meter_id + busy_url_2, function (error, response, body) {
+if(error) { console.log('Error while checking for meter:available'); }
+if(!error && response.statusCode === 200) {
+var body = JSON.parse(body);
+console.log('Data from SMGov API (meter:available):', body);
 
-				}); //meter:active request ends here
-			}//checkParkingSpot function ends here
+if(body.event_type === 'SE') { //body.event_type = SS(move in) / SE(move out)
+//add the spot to freespots
+freeSpots.push(obj);
+if(!done) {
+res.send(200, freeSpots);
+done = true;
+}
+} 
+}
+}); //meter:available request ends here
+}
 
-			checkParkingSpot(closeSpots[i],res);
+filterAvailableOnes(closeSpots[i],res);
 
-		} //end of for loop
+//----------------------------------------------------------------------------------------------
+var checkParkingSpot = function(obj,res) {
+//request to check for meter:'active'
+request(active_url+obj.meter_id, function (error, response, body) {
+if(error) { console.log('Error while checking whether meter:active'); }
+if (!error && response.statusCode === 200) {
+body = JSON.parse(body);
+console.log('Data from SMGov API (meter:active):', body);
+
+if(body.active) {
+//if active, check for meter:'available'
+request(busy_url_1 + body.meter_id + busy_url_2, function (error, response, body) {
+if(error) { console.log('Error while checking for meter:available'); }
+if(!error && response.statusCode === 200) {
+body = JSON.parse(body);
+//console.log('Data from SMGov API (meter:available):', body);
+//body.event_type = SS(move in) / SE(move out)
+if(body.event_type === 'SE') {
+//add the spot to freespots
+freeSpots.push(obj);
+// res.send(200, freeSpots);
+}
+}
+}); //meter:available request ends here
+}
+}
+numChecks++;
+if(numChecks === totalCloseSpots) {
+res.send(200, freeSpots);
+}
+
+}); //meter:active request ends here
+}//checkParkingSpot function ends here
+
+//checkParkingSpot(closeSpots[i],res);
+//----------------------------------------------------------------------------------------------
+
+} //end of for loop
 
 	}); //firebase query ends here
 	
