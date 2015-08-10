@@ -6,6 +6,6 @@ require('./geocoderService');
 require('./mapDirective');
 
 //to test the server
-require('./parkingSpotLocatorService.js');
+require('./parkingSpotLocatorService');
 
 module.exports = map;

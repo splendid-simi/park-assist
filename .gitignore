@@ -1,7 +1,5 @@
 .DS_Store
 
 node_modules/
-client/lib/*
+client/lib/bower/*
 client/dist/*
-
-!client/lib/infobubble.js
