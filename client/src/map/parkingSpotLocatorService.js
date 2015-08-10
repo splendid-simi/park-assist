@@ -1,6 +1,6 @@
 var map = angular.module('parkAssist.map');
 
-map.factory('Comm', function ($http) {
+map.factory('Comm', ['$http', function ($http) {
 
   var getspots = function (tuple, range) {
     console.log('services.js says: getspots called, tuple:', tuple);
@@ -28,4 +28,4 @@ map.factory('Comm', function ($http) {
     testLog : testLog
   };
 
-});
+}]);
