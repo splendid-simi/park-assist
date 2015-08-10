@@ -1,9 +1,10 @@
 var user = angular.module('parkAssist.user');
 var Q = require('q');
 
-user.factory('User', ['Directions', 'DirectionsDisplay', function(Directions, DirectionsDisplay) {
+user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(Directions, DirectionsDisplay, UserMarker) {
 
-  var userLocation;
+  var userLocation, userDestination;
+  var routeInitialized = false;
 
   var userLocationOptions = {
     enableHighAccuracy: true,
@@ -11,37 +12,60 @@ user.factory('User', ['Directions', 'DirectionsDisplay', function(Directions, Di
     maximumAge: 0
   };
 
-  var calcRoute = function(lat,long) {
+  var setDestination = function(latLng) {
+    userDestination = latLng;
+    routeInitialized = false;
+    if(userLocation) {
+      calcRoute();
+    }
+  };
+
+  var calcRoute = function() {
+    DirectionsDisplay.setOptions({
+      preserveViewport: routeInitialized
+    });
+
     var request = {
       origin: userLocation,
-      destination: new google.maps.LatLng(lat, long),
+      destination: userDestination,
       travelMode: google.maps.TravelMode.DRIVING
     };
 
     Directions.route(request, function(response, status) {
-      if (status == google.maps.DirectionsStatus.OK) {
-        console.log('Distance: ', response.routes[0].legs[0].distance.text);
+      if ( status === google.maps.DirectionsStatus.OK ) {
         DirectionsDisplay.setDirections(response);
+        routeInitialized = true;
       }
     });
   };
 
   var watchPosition = function(map) {
-    var deferred = Q.defer();
+
+    var defer = Q.defer();
 
     window.navigator.geolocation.watchPosition(function(pos) {
+
       userLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
-      console.log('You moved!', userLocation);
-      map.panTo(userLocation);
-      deferred.resolve(userLocation);
+
+      defer.resolve(userLocation);
+
+      calcRoute();
+
+      if( !UserMarker.getMarker() ) {
+        UserMarker.addMarker(map, true, userLocation);
+      } else {
+        UserMarker.getMarker().setPosition(userLocation);
+      }
+      
     }, null, userLocationOptions);
 
-    return deferred.promise;
+    return defer.promise;
   };
 
   return {
     watchPosition: watchPosition,
-    calcRoute: calcRoute
+    calcRoute: calcRoute,
+    setDestination: setDestination
   };
 
 }]);

@@ -1,26 +1,72 @@
 var map = angular.module('parkAssist.map');
+var mapOptions = require('./mapOptions');
 
-map.directive('map', ['User', 'Markers', 'DirectionsDisplay', 'Directions', function(User, Markers, DirectionsDisplay, Directions) {
+map.directive('map', ['Comm', 'User', 'UserMarker', 'MeterMarkers', 'DirectionsDisplay', function(Comm, User, UserMarker, MeterMarkers, DirectionsDisplay) {
+
+  var center;
 
   var initialize = function(element) {
 
-    var directionsDisplay = DirectionsDisplay;
-    var directionsService = Directions;
-
-    var mapOptions = {
-      zoom: 17,
-      minZoom: 3,
-      maxZoom: 25,
-      center: {lat: 34.0219, lng: -118.4814}
-    };
-
     var map = new google.maps.Map(element[0], mapOptions);
-    directionsDisplay.setMap(map);
+    DirectionsDisplay.setMap(map);
 
-    User.watchPosition(map).then(function(userLocation) {
-      // User.calcRoute(34.0519, -118.5894);
-      // Markers.addMarker(map,true,userLocation,'hey');
-    });
+    //get user's current location
+    window.navigator.geolocation.getCurrentPosition(function(pos) {
+      
+      var tuple = [pos.coords.latitude, pos.coords.longitude];
+      //remove
+      console.log(tuple);
+      var range = 0.2;
+      Comm.getspots(tuple,range)
+      .then(function(spot) {
+        console.log('mapDirective.js says: spot:',spot);
+        // meter location
+        var meterLoc = new google.maps.LatLng(spot[0],spot[1]);
+
+
+        MeterMarkers.addMarker(map,true,meterLoc);
+        User.setDestination(meterLoc);
+
+        User.watchPosition(map).then(function(userLocation) {
+          map.panTo(userLocation);
+        });
+
+        google.maps.event.addDomListener(map, 'idle', function() {
+          center = map.getCenter();
+        });
+
+        google.maps.event.addDomListener(window, 'resize', function() {
+          map.setCenter(center);
+        });
+      });
+      //-----------------
+
+    }, null);
+
+    // // meter location
+    // var meterLoc = new google.maps.LatLng(34.039409,-118.442925);
+
+
+    // MeterMarkers.addMarker(map,true,meterLoc);
+    // User.setDestination(meterLoc);
+
+    // // setTimeout(function(){
+    // //   var meterLoc = new google.maps.LatLng(34.069409,-118.442925);
+    // //   MeterMarkers.addMarker(map,true,meterLoc);
+    // //   User.setDestination(meterLoc);
+    // // },5000);
+
+    // User.watchPosition(map).then(function(userLocation) {
+    //   map.panTo(userLocation);
+    // });
+
+    // google.maps.event.addDomListener(map, 'idle', function() {
+    //   center = map.getCenter();
+    // });
+
+    // google.maps.event.addDomListener(window, 'resize', function() {
+    //   map.setCenter(center);
+    // });
 
   };
 
