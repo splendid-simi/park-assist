@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "homepage": "https://github.com/epps/MKS20-site-deploy",
   "authors": [
-    "Erik Eppel <eceppel@gmail.com>"
+    "Splendid Simi"
   ],
   "description": "Boilerplate for personal site deploy assignment",
   "license": "MIT",
@@ -19,6 +19,7 @@
   "dependencies": {
     "angular": "~1.4.3",
     "angular-material": "~0.10.0",
+    "angular-ui-router": "~0.2.15",
     "normalize.css": "~3.0.3"
   }
 }

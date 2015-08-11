@@ -31,7 +31,7 @@ var paths = {
     main: 'client/src/scss/style.scss'
   },
   styles: {
-    libSrcs: ['client/lib/normalize.css/normalize.css', 'client/lib/angular-material/angular-material.css'],
+    libSrcs: ['client/lib/bower/normalize.css/normalize.css', 'client/lib/bower/angular-material/angular-material.css'],
     lib: 'client/dist/lib.css',
     main: 'client/dist/style.css'
   }

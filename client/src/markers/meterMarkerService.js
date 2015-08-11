@@ -7,7 +7,6 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
   var bubbleWidth = 250;
   var bubbleOpen = false;
 
-
   var offsetCenter = function(map, latlng, offsetx, offsety) {
     // latlng is the apparent centre-point
     // offsetx is the distance you want that point to move to the right, in pixels
