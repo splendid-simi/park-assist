@@ -45,7 +45,6 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
   };
 
   var watchPosition = function(map) {
-
     var defer = Q.defer();
 
     window.navigator.geolocation.watchPosition(function(pos) {

@@ -17,11 +17,11 @@ map.factory('Comm', ['$http', function ($http) {
       console.log('services.js says: POST successful. response:',resp);
       return [resp.data[0].latitude, resp.data[0].longitude];
     });
-  }
+  };
 
   var testLog = function () {
     console.log('Comm called.');
-  }
+  };
 
   return {
     getspots: getspots,
