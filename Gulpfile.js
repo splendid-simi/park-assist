@@ -22,7 +22,8 @@ var paths = {
       'client/lib/bower/angular-aria/angular-aria.js',
       'client/lib/bower/angular-animate/angular-animate.js',
       'client/lib/bower/angular-material/angular-material.js',
-      'client/lib/bower/angular-ui-router/release/angular-ui-router.js'],
+      'client/lib/bower/angular-ui-router/release/angular-ui-router.js',
+      'client/lib/bower/jquery/dist/jquery.js'],
     lib: 'client/dist/lib.js'
   },
   html: ['client/**/*.html'],
@@ -108,7 +109,8 @@ gulp.task('watch', function() {
 
 gulp.task('browser-sync', function() {
   bs.init({
-      proxy: "localhost:8000"
+      proxy: "localhost:8000",
+      open: false
   });
 });
 

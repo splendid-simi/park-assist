@@ -20,6 +20,7 @@
     "angular": "~1.4.3",
     "angular-material": "~0.10.0",
     "angular-ui-router": "~0.2.15",
-    "normalize.css": "~3.0.3"
+    "normalize.css": "~3.0.3",
+    "jquery": "~2.1.4"
   }
 }
