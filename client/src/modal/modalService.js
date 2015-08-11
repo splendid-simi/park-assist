@@ -1,13 +1,15 @@
 var modal = angular.module('parkAssist.modal');
+var alertify = require('alertify');
 
 modal.factory('Modal', ['Map', 'Geocoder', function(Map, Geocoder) {
 
-  var $changeDest, $modal, input, autocomplete;
+  var $changeDest, $modal, $input, input, autocomplete;
 
   var initModal = function(el) {
     $modal = $(el);
 
-    input = $modal.find('.location-input')[0];
+    $input = $modal.find('.location-input');
+    input = $input[0];
 
     $modal.on('click',function(e) {
       if( e.target === input ) {
@@ -17,6 +19,17 @@ modal.factory('Modal', ['Map', 'Geocoder', function(Map, Geocoder) {
     });
   };
 
+  var isValidDestination = function(place) {
+    if( place.formatted_address.match(/Santa Monica/) ) {
+      return true;
+    }
+
+    input.value = '';
+    alertify.alert('Please select a Santa Monica Location.');
+    input.focus();
+    return false;
+  };
+
   var close = function() {
     $modal.removeClass('modal-open');
     input.value = '';
@@ -24,6 +37,7 @@ modal.factory('Modal', ['Map', 'Geocoder', function(Map, Geocoder) {
 
   var open = function() {
     $modal.addClass('modal-open');
+    input.focus();
   };
 
   var initAutoComplete = function() {
@@ -34,19 +48,35 @@ modal.factory('Modal', ['Map', 'Geocoder', function(Map, Geocoder) {
 
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
       var place = autocomplete.getPlace();
-      var firstResult = $('.pac-container .pac-item:first').text();
+      var $pacItemQuery = $('.pac-container .pac-item:first .pac-item-query');
+      var address = $pacItemQuery.text() + ' ' + $pacItemQuery.next().text();
 
       if (place.geometry) {
+        if( !isValidDestination(place) ) {
+          return;
+        }
+
         close();
         Map.findSpot([place.geometry.location.G, place.geometry.location.K]);
         return;
       }
 
-      Geocoder.parseAddress(address).then(function(tuple) {
+      Geocoder.parseAddress(address)
+      .then(function(place) {
+
+        if( !isValidDestination(place) ) {
+          return;
+        }
+
         close();
-        Map.findSpot(tuple);
+        Map.findSpot([place.geometry.location.lat(), place.geometry.location.lng()]);
+      })
+      .catch(function (error) {
+        input.value = '';
+        alertify.message(error);
+        input.focus();
       });
-      
+
     });
   };
 
