@@ -1,11 +1,74 @@
+$mapHeight: 550px;
+
+.map-container {
+  position: relative;
+}
+
 #map-canvas { 
-  height: 550px;
+  height: $mapHeight;
   margin: 0;
   padding: 0;
 }
 
 .info-bubble {
+  cursor: pointer;
   p {
     margin: 0;
   }
+}
+
+@keyframes mapFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes mapFadeOut {
+  0% {
+    height: $mapHeight;
+    opacity: 0.85;
+  }
+
+  90% {
+    height: $mapHeight;
+    opacity: 0;
+  }
+
+  91%, 100% {
+    opacity: 0;
+    height: 0;
+  }
+}
+
+.loading {
+  height: 0;
+  width: 100%;
+  background-color: #DCE4EF;
+  position: absolute;
+  top: 0;
+  animation: mapFadeOut 1s ease 0s 1 normal both;
+  p {
+    width: 100%;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: 0;
+    font-size: 25px;
+    text-align: center;
+  }
+}
+
+.show {
+  height: $mapHeight;
+  animation: mapFadeIn 1s ease 0s 1 normal both;
+}
+
+.hexdots-loader {
+  position: absolute;
+  top: 70%;
+  left: 50%;
 }

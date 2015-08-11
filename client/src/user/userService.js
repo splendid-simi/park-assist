@@ -16,11 +16,13 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
     userDestination = latLng;
     routeInitialized = false;
     if(userLocation) {
-      calcRoute();
+      return calcRoute();
     }
   };
 
   var calcRoute = function() {
+    var defer = Q.defer();
+
     DirectionsDisplay.setOptions({
       preserveViewport: routeInitialized
     });
@@ -31,12 +33,15 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
       travelMode: google.maps.TravelMode.DRIVING
     };
 
-    Directions.route(request, function(response, status) {
+    Directions.route(request, function(directions, status) {
       if ( status === google.maps.DirectionsStatus.OK ) {
-        DirectionsDisplay.setDirections(response);
+        DirectionsDisplay.setDirections(directions);
         routeInitialized = true;
+        defer.resolve(directions);
       }
     });
+
+    return defer.promise;
   };
 
   var watchPosition = function(map) {
@@ -47,16 +52,14 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
 
       userLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
 
-      defer.resolve(userLocation);
-
-      calcRoute();
-
       if( !UserMarker.getMarker() ) {
         UserMarker.addMarker(map, true, userLocation);
       } else {
         UserMarker.getMarker().setPosition(userLocation);
       }
       
+      defer.resolve(userLocation);
+
     }, null, userLocationOptions);
 
     return defer.promise;
