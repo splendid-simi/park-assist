@@ -2,7 +2,6 @@ var map = angular.module('parkAssist.map');
 var Q = require('q');
 
 map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Comm', 'MeterMarkers', 'User', 'Loading', function(DirectionsDisplay, MapOptions, Comm, MeterMarkers, User, Loading) {
-
   var map, center;
 
   var userInitialized = false;

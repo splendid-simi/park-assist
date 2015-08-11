@@ -7,8 +7,7 @@ map.directive('map', ['Map', 'Loading', 'Modal', function(Map, Loading, Modal) {
     var mapCanvas = $el.find('#map-canvas')[0];
     var $loading = $el.find('.loading');
     var $loadingText = $el.find('.loading-text');
-
-    $changeDest = $el.find('.change-destination');
+    var $changeDest = $el.find('.change-destination');
 
     $changeDest.on('click',function(e) {
       Modal.open();
