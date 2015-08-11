@@ -1,7 +1,7 @@
-var map = angular.module('parkAssist.map');
+// var map = angular.module('parkAssist.map');
 
-map.factory('DirectionsDisplay', function() {
-  return new google.maps.DirectionsRenderer({
-    suppressMarkers: true
-  });
-});
+// map.factory('DirectionsDisplay', function() {
+//   return new google.maps.DirectionsRenderer({
+//     suppressMarkers: true
+//   });
+// });
