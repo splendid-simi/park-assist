@@ -36,9 +36,10 @@
     ]
   },
   "browser": {
-    "InfoBubble": "./client/lib/non-bower/infobubble.js"
+    "InfoBubble": "./client/lib/non-bower/infobubble.js",
+    "alertify": "./client/lib/non-bower/alertify.js"
   },
   "browserify-shim": {
-    "InfoBubble": "InfoBubble"
+    "alertify": "alertify"
   }
 }
