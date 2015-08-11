@@ -73,7 +73,9 @@ gulp.task('libCSS', function() {
 
 gulp.task('libJS', function() {
   return gulp.src(paths.scripts.libSrcs)
+    .pipe(sourcemaps.init())
     .pipe(concat('lib.js'))
+    .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.dist));
 });
 

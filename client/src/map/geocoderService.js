@@ -2,7 +2,6 @@ var map = angular.module('parkAssist.map');
 var Q = require('q');
 
 map.factory('Geocoder', [function() {
-
   var geocoder = new google.maps.Geocoder();
   
   var parseLatLng = function(lat,long) {
@@ -27,8 +26,26 @@ map.factory('Geocoder', [function() {
     return deferred.promise;
   };
 
+  var parseAddress = function(address) {
+
+    var deferred = Q.defer();
+
+    geocoder.geocode({"address":address}, function(results, status) {
+      if ( status !== google.maps.GeocoderStatus.OK ) {
+        return;
+      }
+      var lat = results[0].geometry.location.lat();
+      var lng = results[0].geometry.location.lng();
+
+      deferred.resolve([lat,lng]);
+    });
+
+    return deferred.promise;
+  };
+
   return {
-    parseLatLng: parseLatLng
+    parseLatLng: parseLatLng,
+    parseAddress: parseAddress
   };
 
 }]);
