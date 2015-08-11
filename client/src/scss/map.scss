@@ -2,11 +2,17 @@ $mapHeight: 550px;
 
 .map-container {
   position: relative;
+  footer {
+    padding: 15px 0;
+    margin: 0 0 20px 0;
+    border-top: 1px solid #4E4F53;
+    border-bottom: 1px solid #4E4F53;
+  }
 }
 
 #map-canvas { 
   height: $mapHeight;
-  margin: 0;
+  margin: 0 0 20px 0;
   padding: 0;
 }
 
@@ -71,4 +77,32 @@ $mapHeight: 550px;
   position: absolute;
   top: 70%;
   left: 50%;
+}
+
+.find-another {
+  text-align: center;
+  text-transform: uppercase;
+  span {  
+    position: relative;
+    cursor: pointer;
+    &:before {
+      content: '';
+      height: 2px;
+      width: 0px;
+      background: #000;
+      transition: width 0.5s ease;
+      position: absolute;
+      bottom: 0;
+    }
+    &:hover {
+      &:before {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.change-location {
+  margin: 0 0 10px 0;
+  text-transform: uppercase;
 }
