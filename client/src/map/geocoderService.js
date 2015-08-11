@@ -27,7 +27,6 @@ map.factory('Geocoder', [function() {
   };
 
   var parseAddress = function(address) {
-
     var deferred = Q.defer();
 
     geocoder.geocode({"address":address}, function(results, status) {

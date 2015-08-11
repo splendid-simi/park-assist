@@ -8,7 +8,4 @@ require('./mapDirective');
 require('./mapService');
 require('./mapOptions');
 
-//to test the server
-require('./parkingSpotLocatorService');
-
 module.exports = map;

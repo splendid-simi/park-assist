@@ -2,6 +2,7 @@ var map = angular.module('parkAssist.map');
 var Q = require('q');
 
 map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Comm', 'MeterMarkers', 'User', 'Loading', function(DirectionsDisplay, MapOptions, Comm, MeterMarkers, User, Loading) {
+  console.log(Comm)
   var map, center;
 
   var userInitialized = false;
@@ -18,7 +19,7 @@ map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Comm', 'MeterMarkers', '
       // meter location
       var meterLoc = new google.maps.LatLng(spot[0],spot[1]);
 
-      MeterMarkers.addMarker(map,true,meterLoc);
+      MeterMarkers.addMarker(map, true, meterLoc);
 
       if(userInitialized) {
         User.setDestination(meterLoc).then(function(directions) {
