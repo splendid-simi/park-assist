@@ -8,39 +8,52 @@ map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers'
   var range = 0.2;
 
   var findSpot = function(tuple) {
-    Loading.changeText('Finding you the best parking spot...');
-    Loading.show();
+    loadingText.text('Finding you the best parking spot...');
     
-    Locator.getspots(tuple,range)
-    .then(function(spot) {
-      console.log('mapDirective.js says: spot:', spot);
-      
-      // meter location
-      var meterLoc = new google.maps.LatLng(spot[0],spot[1]);
+    //remove
+    console.log(tuple);
 
-      MeterMarkers.addMarker(map, true, meterLoc);
+    //Create a user and get the key
+    var ref = Comm.createUser(tuple, range);
+    console.log('User created. Key:', ref.key());
 
-      if(userInitialized) {
-        User.setDestination(meterLoc).then(function(directions) {
-          Loading.hide();
+
+    //variables to help navigate to the best one
+    var first = false;
+    var queue = [];
+
+    //Setup a listener for recommendations, ordered by distance
+    ref.child('Recommendations').orderByChild('distance').on('child_added', function(snapshot){
+      var pSpot = snapshot.val();
+      console.log(typeof pSpot); 
+
+      if(!first) {
+        first = true;
+        var spot = [pSpot.latitude, pSpot.longitude];
+        console.log('mapDirective.js says: spot:', spot);
+        
+        // meter location
+        var meterLoc = new google.maps.LatLng(spot[0],spot[1]);
+
+        MeterMarkers.addMarker(map,true,meterLoc);
+        User.setDestination(meterLoc);
+
+        User.watchPosition(map)
+        .then(function(userLocation) {
+          map.panTo(userLocation);
+          loadingText.text('Spot Found! Calculating Route...');
+          return User.calcRoute();
+        })
+        .then(function(directions) {
+          loading.removeClass('show');
         });
-        return;
+      }
+      else {
+        queue.push(pSpot);
       }
 
-      User.setDestination(meterLoc);
-      
-      User.watchPosition(map)
-      .then(function(userLocation) {
-        map.panTo(userLocation);
-        Loading.changeText('Spot Found! Calculating Route...');
-        return User.calcRoute();
-      })
-      .then(function(directions) {
-        userInitialized = true;
-        Loading.hide();
-      });
-
     });
+    
   };
 
   var getMap = function() {
