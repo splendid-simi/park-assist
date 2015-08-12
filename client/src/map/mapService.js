@@ -1,7 +1,7 @@
 var map = angular.module('parkAssist.map');
 var Q = require('q');
 
-map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers', 'User', 'Loading', function(DirectionsDisplay, MapOptions, Locator, MeterMarkers, User, Loading) {
+map.factory('Map', ['Traffic', 'DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers', 'User', 'Loading', function(Traffic, DirectionsDisplay, MapOptions, Locator, MeterMarkers, User, Loading) {
   var map, center, dbUser, meterLoc;
 
   var userInitialized = false;
@@ -12,7 +12,7 @@ map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers'
     var spot = [pSpot.latitude, pSpot.longitude];
     meterLoc = new google.maps.LatLng(spot[0],spot[1]);
 
-    MeterMarkers.addMarker(map,true,meterLoc);
+    MeterMarkers.addMarker(map, true, meterLoc);
   };
 
   var findSpot = function(tuple, newDestination) {
@@ -83,6 +83,7 @@ map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers'
 
     map = new google.maps.Map(mapCanvas, MapOptions);
     DirectionsDisplay.setMap(map);
+    Traffic.showTraffic(map);
 
     google.maps.event.addDomListener(map, 'idle', function() {
       center = map.getCenter();
