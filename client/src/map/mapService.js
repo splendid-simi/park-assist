@@ -9,28 +9,24 @@ map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers'
 
   var findSpot = function(tuple) {
     loadingText.text('Finding you the best parking spot...');
-    
-    //remove
-    console.log(tuple);
 
     //Create a user and get the key
     var ref = Comm.createUser(tuple, range);
-    console.log('User created. Key:', ref.key());
+    // console.log('User created. Key:', ref.key());
 
-
-    //variables to help navigate to the best one
+    //variables to help navigate to the best parking space
     var first = false;
     var queue = [];
 
     //Setup a listener for recommendations, ordered by distance
     ref.child('Recommendations').orderByChild('distance').on('child_added', function(snapshot){
       var pSpot = snapshot.val();
-      console.log(typeof pSpot); 
+      //console.log(pSpot); 
 
-      if(!first) {
+      if(!first) { //if the first spot hasn't already been recommended to the user, then we recommend it here
         first = true;
         var spot = [pSpot.latitude, pSpot.longitude];
-        console.log('mapDirective.js says: spot:', spot);
+        // console.log('mapDirective.js says: spot:', spot);
         
         // meter location
         var meterLoc = new google.maps.LatLng(spot[0],spot[1]);
@@ -51,10 +47,8 @@ map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers'
       else {
         queue.push(pSpot);
       }
-
-    });
-    
-  };
+    };  //firebase listener ends here
+  };  //end of findSpot()
 
   var getMap = function() {
     return map;

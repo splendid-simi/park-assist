@@ -1,7 +1,7 @@
 var map = angular.module('parkAssist.map');
 
 map.directive('map', ['Map', 'Loading', 'Modal', function(Map, Loading, Modal) {
-
+  
   var loadMap = function(scope, element, attrs) {
     var $el = $(element);
     var mapCanvas = $el.find('#map-canvas')[0];
