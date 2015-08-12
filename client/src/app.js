@@ -7,6 +7,7 @@ var ParkAssist = angular.module('ParkAssist', [
   require('./map').name,
   require('./markers').name,
   require('./modal').name,
+  require('./traffic').name,
   require('./user').name
 ]);
 
