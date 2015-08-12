@@ -57,7 +57,7 @@ modal.factory('Modal', ['Map', 'Geocoder', function(Map, Geocoder) {
         }
 
         close();
-        Map.findSpot([place.geometry.location.G, place.geometry.location.K]);
+        Map.findSpot([place.geometry.location.G, place.geometry.location.K], true);
         return;
       }
 
@@ -69,7 +69,7 @@ modal.factory('Modal', ['Map', 'Geocoder', function(Map, Geocoder) {
         }
 
         close();
-        Map.findSpot([place.geometry.location.lat(), place.geometry.location.lng()]);
+        Map.findSpot([place.geometry.location.lat(), place.geometry.location.lng()], true);
       })
       .catch(function (error) {
         input.value = '';

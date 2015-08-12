@@ -1,13 +1,12 @@
 {
-  "name": "MKS20-site-deploy",
+  "name": "Park Assist",
   "main": "index.js",
   "version": "0.0.0",
-  "homepage": "https://github.com/epps/MKS20-site-deploy",
+  "homepage": "https://github.com/splendid-simi/splendid-simi",
   "authors": [
     "Splendid Simi"
   ],
   "description": "Boilerplate for personal site deploy assignment",
-  "license": "MIT",
   "ignore": [
     "**/.*",
     "node_modules",
