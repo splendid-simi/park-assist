@@ -1,5 +1,5 @@
 var locator = angular.module('parkAssist.locator',[]);
 
-require('./locator');
+require('./locatorService');
 
 module.exports = locator;

@@ -40,6 +40,7 @@
     "alertify": "./client/lib/non-bower/alertify.js"
   },
   "browserify-shim": {
+    "InfoBubble": "InfoBubble",
     "alertify": "alertify"
   }
 }
