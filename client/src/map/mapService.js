@@ -61,7 +61,6 @@ map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers'
         User.setDestination(meterLoc).then(function(directions) {
           Loading.hide();
         });
-        return;
       }
 
       User.setDestination(meterLoc);
@@ -69,10 +68,6 @@ map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers'
       User.watchPosition(map)
       .then(function(userLocation) {
         map.panTo(userLocation);
-        Loading.changeText('Spot Found! Calculating Route...');
-        return User.calcRoute();
-      })
-      .then(function(directions) {
         userInitialized = true;
         Loading.hide();
       });
