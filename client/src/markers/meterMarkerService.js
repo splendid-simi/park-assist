@@ -21,7 +21,7 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
     );
 
     var worldCoordinateCenter = map.getProjection().fromLatLngToPoint(latlng);
-    var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0)
+    var pixelOffset = new google.maps.Point((offsetx/scale) || 0,(offsety/scale) ||0);
 
     var worldCoordinateNewCenter = new google.maps.Point(
         worldCoordinateCenter.x - pixelOffset.x,
@@ -46,7 +46,7 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
 
   var addInfoBubble = function(map, imgSrc, address) {
     var bubbleContent = '<div class="info-bubble">'+
-      '<img src="'+imgSrc+'" />' +
+      '<img src="'+imgSrc+'" />'+
       '<p class="md-body-1">'+address+'</p>'+
       '</div>';
 
@@ -69,9 +69,8 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
   };
 
   var addMarker = function(map, active, LatLng) {
-
     var lat = LatLng.G;
-    var long = LatLng.K;
+    var lng = LatLng.K;
 
     if(marker) {
       infoBubble.close();
@@ -86,9 +85,9 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
       map: map
     });
 
-    var imgSrc = 'https://maps.googleapis.com/maps/api/streetview?size='+bubbleWidth+'x'+bubbleWidth+'&location='+lat+','+long+'&fov=120&heading=235&pitch=10';
+    var imgSrc = 'https://maps.googleapis.com/maps/api/streetview?size='+bubbleWidth+'x'+bubbleWidth+'&location='+lat+','+lng+'&fov=120&heading=235&pitch=10';
 
-    Geocoder.parseLatLng(lat,long).then(function(address) {
+    Geocoder.parseLatLng(lat,lng).then(function(address) {
 
       infoBubble = addInfoBubble(map,imgSrc,address);
 

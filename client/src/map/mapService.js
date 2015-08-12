@@ -1,8 +1,7 @@
 var map = angular.module('parkAssist.map');
 var Q = require('q');
 
-map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Comm', 'MeterMarkers', 'User', 'Loading', function(DirectionsDisplay, MapOptions, Comm, MeterMarkers, User, Loading) {
-  console.log(Comm)
+map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers', 'User', 'Loading', function(DirectionsDisplay, MapOptions, Locator, MeterMarkers, User, Loading) {
   var map, center;
 
   var userInitialized = false;
@@ -12,7 +11,7 @@ map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Comm', 'MeterMarkers', '
     Loading.changeText('Finding you the best parking spot...');
     Loading.show();
     
-    Comm.getspots(tuple,range)
+    Locator.getspots(tuple,range)
     .then(function(spot) {
       console.log('mapDirective.js says: spot:', spot);
       

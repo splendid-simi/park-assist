@@ -1,6 +1,6 @@
 var locator = angular.module('parkAssist.locator');
 
-locator.factory('Comm', ['$http', function ($http) {
+locator.factory('Locator', ['$http', function ($http) {
   var getspots = function (tuple, range) {
     console.log('services.js says: getspots called, tuple:', tuple);
 

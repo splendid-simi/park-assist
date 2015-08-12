@@ -7,11 +7,9 @@ map.factory('Geocoder', [function() {
   var parseLatLng = function(lat,long) {
     var latlng = new google.maps.LatLng(lat, long);
     var deferred = Q.defer();
+
     var geocodeOptions = {
-      location: latlng,
-      componentRestrictions: {
-        country: 'US'
-      }
+      location: latlng
     };
 
     geocoder.geocode(geocodeOptions, function(results, status) {
@@ -33,11 +31,9 @@ map.factory('Geocoder', [function() {
 
   var parseAddress = function(address) {
     var deferred = Q.defer();
+    
     var geocodeOptions = {
-      address: address,
-      componentRestrictions: {
-        country: 'US'
-      }
+      address: address
     };
 
     geocoder.geocode(geocodeOptions, function(results, status) {
