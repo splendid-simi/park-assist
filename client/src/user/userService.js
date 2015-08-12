@@ -2,7 +2,6 @@ var user = angular.module('parkAssist.user');
 var Q = require('q');
 
 user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(Directions, DirectionsDisplay, UserMarker) {
-
   var userLocation, userDestination;
   var routeInitialized = false;
 
@@ -47,6 +46,10 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
   var watchPosition = function(map) {
     var defer = Q.defer();
 
+    // watchPosition returns an error if user picks cancel
+    // we are getting repeated prompts for user position because
+    // defer is being used to wait for a location
+    // need to use native error handling before using Q
     window.navigator.geolocation.watchPosition(function(pos) {
       userLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
 

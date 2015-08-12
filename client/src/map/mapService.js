@@ -3,14 +3,13 @@ var Q = require('q');
 
 map.factory('Map', ['Traffic', 'DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers', 'User', 'Loading', function(Traffic, DirectionsDisplay, MapOptions, Locator, MeterMarkers, User, Loading) {
   var map, center, dbUser, meterLoc;
-
   var userInitialized = false;
   var range = 0.2;
   var queue = [];
-
+  
   var setMeter = function(pSpot) {
     var spot = [pSpot.latitude, pSpot.longitude];
-    meterLoc = new google.maps.LatLng(spot[0],spot[1]);
+    meterLoc = new google.maps.LatLng(spot[0], spot[1]);
 
     MeterMarkers.addMarker(map, true, meterLoc);
   };
@@ -39,6 +38,11 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'MapOptions', 'Locator', 'Me
 
     //Create a user and get the key
     dbUser = Locator.createUser(tuple, range);
+
+    // If user leaves browser, remove user from db
+    window.onbeforeunload = function(e) {
+      dbUser.set(null);
+    };
     // console.log('User created. Key:', dbUser.key());
 
     //variables to help navigate to the best parking space

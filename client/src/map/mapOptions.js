@@ -11,6 +11,8 @@ map.factory('MapOptions', [
                 lat: 34.0219,
                 lng: -118.4814
             },
+
+            // Customize a map on https://snazzymaps.com/ and paste the CSS here
             styles: [{
                 "stylers": [{
                     "visibility": "on"
