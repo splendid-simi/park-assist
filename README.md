@@ -14,16 +14,11 @@ The Santa Monica Parking API provides information on over 6000 meters. At times 
 
 ####Tools Used:
   * [AngularJS](https://angularjs.org/"AngularJS")
-
   * [Firebase](https://www.firebase.com/"Firebase")
-
   * [Node.js](https://nodejs.org/"Node.js")
-
   * [Express](http://expressjs.com/"Express")
-
-  * [Google Maps APIs]("https://developers.google.com/maps/web/"Google Maps APIs)
-
-  *[City of Santa Monica Parking Data API](https://parking.api.smgov.net/"City of Santa Monica Parking Data API")
+  * [Google Maps APIs](https://developers.google.com/maps/web/"Google Maps APIs)
+  * [City of Santa Monica Parking Data API](https://parking.api.smgov.net/"City of Santa Monica Parking Data API")
 
 ####To start contributing to the **Park Assist** codebase:
   1. Fork the repo
