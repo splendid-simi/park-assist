@@ -110,4 +110,4 @@ gulp.task('serve', function() {
 
 gulp.task('prod', ['minJS', 'minCSS']);
 
-gulp.task('default', ['libCSS', 'libJS', 'js', 'scss', 'watch', 'serve', 'browser-sync']);
+gulp.task('default', ['libCSS', 'libJS', 'js', 'scss', 'watch', 'browser-sync', 'serve']);
