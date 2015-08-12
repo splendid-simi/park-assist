@@ -46,6 +46,10 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
   var watchPosition = function(map) {
     var defer = Q.defer();
 
+    // watchPosition returns an error if user picks cancel
+    // we are getting repeated prompts for user position because
+    // defer is being used to wait for a location
+    // need to use native error handling before using Q
     window.navigator.geolocation.watchPosition(function(pos) {
       userLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
 
@@ -63,18 +67,9 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
     return defer.promise;
   };
 
-  var userExit = function() {
-    window.onbeforeunload = function(e) {
-      // e is the onbeforeunload object
-      // a return from this function invokes a popup
-      return 'Popup';
-    };
-  };
-
   return {
     watchPosition: watchPosition,
     calcRoute: calcRoute,
-    setDestination: setDestination,
-    userExit: userExit
+    setDestination: setDestination
   };
 }]);
