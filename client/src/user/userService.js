@@ -2,7 +2,6 @@ var user = angular.module('parkAssist.user');
 var Q = require('q');
 
 user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(Directions, DirectionsDisplay, UserMarker) {
-
   var userLocation, userDestination;
   var routeInitialized = false;
 
@@ -64,9 +63,18 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
     return defer.promise;
   };
 
+  var userExit = function() {
+    window.onbeforeunload = function(e) {
+      // e is the onbeforeunload object
+      // a return from this function invokes a popup
+      return 'Popup';
+    };
+  };
+
   return {
     watchPosition: watchPosition,
     calcRoute: calcRoute,
-    setDestination: setDestination
+    setDestination: setDestination,
+    userExit: userExit
   };
 }]);

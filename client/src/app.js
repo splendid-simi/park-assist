@@ -1,3 +1,7 @@
+// app.js requires all the modules in their respective folders.
+// The requires in this file accesses the index.js file in each service's directory
+// and points to the module via .name property.
+
 var ParkAssist = angular.module('ParkAssist', [
   'ui.router',
   require('./directions').name,
