@@ -1,6 +1,6 @@
-var map = angular.module('parkAssist.map');
+var loading = angular.module('parkAssist.loading');
 
-map.factory('Loading', [function() {
+loading.factory('Loading', [function() {
   var $loading, $loadingText;
 
   var init = function(loadingEl, loadingTextEl) {

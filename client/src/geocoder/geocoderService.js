@@ -1,7 +1,7 @@
-var map = angular.module('parkAssist.map');
+var geocoder = angular.module('parkAssist.geocoder');
 var Q = require('q');
 
-map.factory('Geocoder', [function() {
+geocoder.factory('Geocoder', [function() {
   var geocoder = new google.maps.Geocoder();
 
   var parseLatLng = function(lat,long) {
