@@ -8,10 +8,11 @@ map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers'
   var range = 0.2;
 
   var findSpot = function(tuple) {
-    loadingText.text('Finding you the best parking spot...');
+    Loading.changeText('Finding you the best parking spot...');
+    Loading.show();
 
     //Create a user and get the key
-    var ref = Comm.createUser(tuple, range);
+    var ref = Locator.createUser(tuple, range);
     // console.log('User created. Key:', ref.key());
 
     //variables to help navigate to the best parking space
@@ -37,17 +38,18 @@ map.factory('Map', ['DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers'
         User.watchPosition(map)
         .then(function(userLocation) {
           map.panTo(userLocation);
-          loadingText.text('Spot Found! Calculating Route...');
+          Loading.changeText('Spot Found! Calculating Route...');
           return User.calcRoute();
         })
         .then(function(directions) {
-          loading.removeClass('show');
+          userInitialized = true;
+          Loading.hide();
         });
       }
       else {
         queue.push(pSpot);
       }
-    };  //firebase listener ends here
+    });  //firebase listener ends here
   };  //end of findSpot()
 
   var getMap = function() {
