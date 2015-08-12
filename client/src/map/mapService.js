@@ -6,6 +6,13 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'MapOptions', 'Locator', 'Me
   var userInitialized = false;
   var range = 0.2;
   var queue = [];
+
+  // If user leaves browser, remove user from db
+  window.onbeforeunload = function(e) {
+    if(dbUser) {
+      dbUser.set(null);
+    }
+  };
   
   var setMeter = function(pSpot) {
     var spot = [pSpot.latitude, pSpot.longitude];
@@ -36,44 +43,39 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'MapOptions', 'Locator', 'Me
       dbUser.set(null);
     }
 
-    //Create a user and get the key
-    dbUser = Locator.createUser(tuple, range);
-
-    // If user leaves browser, remove user from db
-    window.onbeforeunload = function(e) {
-      dbUser.set(null);
-    };
-    // console.log('User created. Key:', dbUser.key());
-
     //variables to help navigate to the best parking space
     var firstSpotInitialized = false;
 
-    //Setup a listener for recommendations, ordered by distance
-    dbUser.child('Recommendations').orderByChild('distance').on('child_added', function(snapshot){
-      var pSpot = snapshot.val();
+    //Create a user and get the key
+    Locator.createUser(tuple,range)
+    .then(function(dbUser) {
+      //Setup a listener for recommendations, ordered by distance
+      dbUser.child('Recommendations').orderByChild('distance').on('child_added', function(snapshot){
+        var pSpot = snapshot.val();
 
-      if(firstSpotInitialized) {
-        queue.push(pSpot);
-        return;
-      }
+        if(firstSpotInitialized) {
+          queue.push(pSpot);
+          return;
+        }
 
-      firstSpotInitialized = true;
+        firstSpotInitialized = true;
 
-      setMeter(pSpot);
+        setMeter(pSpot);
 
-      if(userInitialized) {
-        User.setDestination(meterLoc).then(function(directions) {
+        if(userInitialized) {
+          User.setDestination(meterLoc).then(function(directions) {
+            Loading.hide();
+          });
+        }
+
+        User.setDestination(meterLoc);
+
+        User.watchPosition(map)
+        .then(function(userLocation) {
+          map.panTo(userLocation);
+          userInitialized = true;
           Loading.hide();
         });
-      }
-
-      User.setDestination(meterLoc);
-
-      User.watchPosition(map)
-      .then(function(userLocation) {
-        map.panTo(userLocation);
-        userInitialized = true;
-        Loading.hide();
       });
     });
   };
