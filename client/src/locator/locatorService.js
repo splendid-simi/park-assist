@@ -10,7 +10,7 @@ locator.factory('Locator', ['$http', function ($http) {
     var fb = new Firebase('https://burning-fire-1110.firebaseio.com/');
     var reference = fb.child('Users').push({ latitude: tuple[0], longitude: tuple[1], range: range });
     return reference;
-  }
+  };
 
   return {
     createUser : createUser

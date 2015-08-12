@@ -8,9 +8,14 @@ map.directive('map', ['Map', 'Loading', 'Modal', function(Map, Loading, Modal) {
     var $loading = $el.find('.loading');
     var $loadingText = $el.find('.loading-text');
     var $changeDest = $el.find('.change-destination');
+    var $anotherSpot = $el.find('.another-spot');
 
     $changeDest.on('click',function(e) {
       Modal.open();
+    });
+
+    $anotherSpot.on('click',function(e) {
+      Map.findSpot();
     });
 
     Loading.init($loading,$loadingText);
