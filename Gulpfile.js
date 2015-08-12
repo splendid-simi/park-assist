@@ -24,7 +24,7 @@ var paths = {
       'client/lib/bower/angular-material/angular-material.js',
       'client/lib/bower/angular-ui-router/release/angular-ui-router.js',
       'client/lib/bower/jquery/dist/jquery.js'],
-    lib: 'client/dist/lib.js'
+    dist: 'client/dist/**/*.js'
   },
   html: ['client/**/*.html'],
   scss: {
@@ -33,7 +33,7 @@ var paths = {
   },
   styles: {
     libSrcs: ['client/lib/bower/normalize.css/normalize.css', 'client/lib/bower/angular-material/angular-material.css'],
-    lib: 'client/dist/lib.css',
+    dist: 'client/dist/**/*.css',
     main: 'client/dist/style.css'
   }
 };
@@ -72,33 +72,21 @@ gulp.task('libCSS', function() {
 });
 
 gulp.task('libJS', function() {
-  return gulp.src(paths.scripts.libSrcs)
+  return gulp.src(paths.dist)
     .pipe(sourcemaps.init())
     .pipe(concat('lib.js'))
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('minAppJS', function() {
-  return gulp.src(paths.scripts.app)
+gulp.task('minJS', function() {
+  return gulp.src(paths.scripts.dist)
     .pipe(uglify())
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('minLibJS', function() {
-  return gulp.src(paths.scripts.lib)
-    .pipe(uglify())
-    .pipe(gulp.dest(paths.dist));
-});
-
-gulp.task('minLibCSS', function() {
-  return gulp.src(paths.styles.lib)
-    .pipe(cssmin())
-    .pipe(gulp.dest(paths.dist));
-});
-
-gulp.task('minAppCSS', function() {
-  return gulp.src(paths.styles.main)
+gulp.task('minCSS', function() {
+  return gulp.src(paths.styles.dist)
     .pipe(cssmin())
     .pipe(gulp.dest(paths.dist));
 });
@@ -120,6 +108,6 @@ gulp.task('serve', function() {
   nodemon({ script: 'index.js', ignore: 'node_modules/**/*.js'});
 });
 
-gulp.task('prod', ['libCSS', 'libJS', 'js', 'scss', 'minLibJS', 'minAppJS', 'minAppCSS']);
+gulp.task('prod', ['minJS', 'minCSS']);
 
 gulp.task('default', ['libCSS', 'libJS', 'js', 'scss', 'watch', 'serve', 'browser-sync']);
