@@ -1,6 +1,7 @@
 var map = angular.module('parkAssist.map');
 
 map.directive('map', ['Map', 'Loading', 'Modal', function(Map, Loading, Modal) {
+  
   var loadMap = function(scope, element, attrs) {
     var $el = $(element);
     var mapCanvas = $el.find('#map-canvas')[0];
@@ -31,14 +32,3 @@ map.directive('map', ['Map', 'Loading', 'Modal', function(Map, Loading, Modal) {
     link: loadMap
   };
 }]);
-
-// Redirect:
-// setTimeout(function(){
-//   var meterLoc = new google.maps.LatLng(34.069409,-118.442925);
-//   MeterMarkers.addMarker(map,true,meterLoc);
-//   loadingText.text('Bummer! Spot taken. Redirecting you...');
-//   loading.addClass('show');
-//   User.setDestination(meterLoc).then(function(directions) {
-//     loading.removeClass('show');
-//   });
-// },15000);
