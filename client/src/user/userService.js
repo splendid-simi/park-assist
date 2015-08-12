@@ -15,9 +15,9 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
   var setDestination = function(latLng) {
     userDestination = latLng;
     routeInitialized = false;
-    if(userLocation) {
-      return calcRoute();
-    }
+      if(userLocation) {
+        return calcRoute();
+      }
   };
 
   var calcRoute = function() {
@@ -48,7 +48,6 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
     var defer = Q.defer();
 
     window.navigator.geolocation.watchPosition(function(pos) {
-
       userLocation = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
 
       if( !UserMarker.getMarker() ) {
@@ -56,9 +55,10 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
       } else {
         UserMarker.getMarker().setPosition(userLocation);
       }
+
+      calcRoute();
       
       defer.resolve(userLocation);
-
     }, null, userLocationOptions);
 
     return defer.promise;
@@ -69,5 +69,4 @@ user.factory('User', ['Directions', 'DirectionsDisplay', 'UserMarker', function(
     calcRoute: calcRoute,
     setDestination: setDestination
   };
-
 }]);
