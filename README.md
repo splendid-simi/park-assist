@@ -1,4 +1,4 @@
-# [ Park Assist ]
+# **Park Assist**
 ####A web application to quickly help you find the closest metered parking spot in Santa Monica, CA.
 
 ## Summary
@@ -20,7 +20,7 @@ The Santa Monica Parking API provides information on over 6000 meters. At times 
 [Google Maps APIs]("https://developers.google.com/maps/?hl=en"/Google Maps APIs)
 [City of Santa Monica Parking Data API](https://parking.api.smgov.net/"City of Santa Monica Parking Data API")
 
-####To start contributing to the [Park Assist] codebase:
+####To start contributing to the **Park Assist** codebase:
   1. Fork the repo
 
   2. Clone your fork locally
