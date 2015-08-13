@@ -1,13 +1,13 @@
-# [ Park Assist ]
+# Park Assist
 ####A web application to quickly help you find the closest metered parking spot in Santa Monica, CA.
-
-## Summary
-Web app to take the decision making away from parking at meters in Santa Monica, CA. It will choose the closest confirmed open parking meter for you.
 
 ##Problem
 Parking is near impossible to find in Santa Monica. In addition, the information in the Santa Monica Parking API is not being fully utilized.
 
-##Solution
+##Abstract
+Web app to take the decision making away from parking at meters in Santa Monica, CA. It will choose the closest confirmed open parking meter for you.
+
+##Strategy
 The Santa Monica Parking API provides information on over 6000 meters. At times over 100 events are added in less than a minute. We took this wealth of data and processed it behind the scenes using two different servers, and a client app to create a streamlined presentation of the most useful information for someone looking for a parking spot.
 
 ## Developer Documentation
@@ -20,7 +20,7 @@ The Santa Monica Parking API provides information on over 6000 meters. At times 
 * [Google Maps APIs](https://developers.google.com/maps/?hl=en/)
 * [City of Santa Monica Parking Data API](https://parking.api.smgov.net/)
 
-####To start contributing to the [Park Assist] codebase:
+####To start contributing to the Park Assist codebase:
   1. Fork the repo
   2. Clone your fork locally
   3. npm install - server dependencies
@@ -72,7 +72,6 @@ src
     ├── index.js
     └── userService.js
 ```
-
   * The main is located at src/app.js
       * All app.js does is require all module dependencies
       * There are no controllers in this app.
