@@ -7,23 +7,19 @@ $mapHeightMobile: 235px;
 
 .map-footer {
   max-width: 90%;
-  padding: 15px 0;
   margin: 0 auto 20px auto;
+  overflow: auto;
 }
 
 .map-link {
   display: block;
   margin: 0 auto 10px auto;
   padding: 0;
-  border-bottom: 1px solid transparent;
+  border-bottom: 2px solid transparent;
   word-spacing: 0.1em;
-  font-size: 25px;
   transition: all 0.5s ease;
   &:hover {
     border-color: #000;
-  }
-  @media screen and (min-width: $mobile) {
-    font-size: 35px;
   }
 }
 
@@ -41,7 +37,7 @@ $mapHeightMobile: 235px;
 
 #map-canvas { 
   height: $mapHeightMobile;
-  margin: 0 0 20px 0;
+  margin: 0 0 31px 0;
   padding: 0;
   border-radius: 10px;
   box-shadow: 0 0 15px -1px rgba(0,0,0,0.75);

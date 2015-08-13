@@ -71,16 +71,23 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
   var addMarker = function(map, active, LatLng) {
     var lat = LatLng.G;
     var lng = LatLng.K;
+    var image = {
+      url: '../img/parking.png',
+      size: new google.maps.Size(50, 50),
+      origin: new google.maps.Point(0, 0),
+      anchor: new google.maps.Point(17, 34),
+      scaledSize: new google.maps.Size(25, 25)
+    };
 
     if(marker) {
       infoBubble.close();
       marker.setMap(null);
     }
-
+    
     marker = new google.maps.Marker({
       active: active,
       position: LatLng,
-      icon: '../../img/parking.png',
+      icon: image,
       animation: google.maps.Animation.DROP,
       map: map
     });
