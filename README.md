@@ -35,7 +35,7 @@ We loosely modeled the directory structure from the information in this article:
 https://scotch.io/tutorials/angularjs-best-practices-directory-structure
 
 ```
-./src/
+src/
 ├── app.js
 ├── directions
 │   ├── directionsDisplayService.js
