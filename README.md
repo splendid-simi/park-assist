@@ -85,4 +85,19 @@ We use Firebase to store the data.
 
 #### Schema
 
+#####MeteredParkingSpots
+###### * MeterID
+** active - Set up with PSA server
+** latitude - Set up with PSA server
+** longitude - Set up with PSA server
+**  mostRecentEvent- Continually updated with Cloudify Server
+**  timeStamp- Continually updated with Cloudify Server
+##### * Users
+** Firebase unique identifier
+*** latitude - from Google Maps API
+*** logitude - from Google Maps API
+*** range - auto set
+*** Recomendations
+**** array of objects with * MeterID: {active, latitude, longitude, mostRecentEvent, timeStamp} same format as MeteredParkingSpots.
+
 
