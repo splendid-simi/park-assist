@@ -19,9 +19,6 @@ var paths = {
     src: 'client/src/**/*.js',
     app: 'client/src/app.js',
     libSrcs: ['client/lib/bower/angular/angular.js',
-      'client/lib/bower/angular-aria/angular-aria.js',
-      'client/lib/bower/angular-animate/angular-animate.js',
-      'client/lib/bower/angular-material/angular-material.js',
       'client/lib/bower/angular-ui-router/release/angular-ui-router.js',
       'client/lib/bower/jquery/dist/jquery.js'],
     dist: 'client/dist/**/*.js'
@@ -32,7 +29,7 @@ var paths = {
     main: 'client/src/scss/style.scss'
   },
   styles: {
-    libSrcs: ['client/lib/bower/normalize.css/normalize.css', 'client/lib/bower/angular-material/angular-material.css'],
+    libSrcs: ['client/lib/bower/normalize.css/normalize.css'],
     dist: 'client/dist/**/*.css',
     main: 'client/dist/style.css'
   }
@@ -110,4 +107,4 @@ gulp.task('serve', function() {
 
 gulp.task('prod', ['minJS', 'minCSS']);
 
-gulp.task('default', ['libCSS', 'libJS', 'js', 'scss', 'watch', 'serve', 'browser-sync']);
+gulp.task('default', ['libCSS', 'libJS', 'js', 'scss', 'watch', 'browser-sync', 'serve']);

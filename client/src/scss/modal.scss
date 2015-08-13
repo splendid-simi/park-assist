@@ -1,0 +1,82 @@
+.location-input {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 90%;
+  max-width: 550px;
+  padding: 15px 5px;
+  margin: 0;
+  border: 1px solid #000;
+  transform: translateY(-50%) translateX(-50%);
+  font-size: 24px;
+  line-height: 1;
+  -webkit-appearance: none;
+  -moz-appearance:    none;
+  outline: none;
+  &::-webkit-input-placeholder {
+    color: #000;
+    text-transform: uppercase;
+  }
+  &::-moz-placeholder {
+    color: #000;
+    text-transform: uppercase;
+  }
+  &:-ms-input-placeholder {
+    color: #000;
+    text-transform: uppercase;
+  }
+  &:-moz-placeholder {
+    color: #000;
+    text-transform: uppercase;
+  }
+  &:focus {
+    &::-webkit-input-placeholder {
+      color: scale-color(#000, $lightness: 60%);
+    }
+    &::-moz-placeholder {
+      color: scale-color(#000, $lightness: 60%);
+    }
+    &:-ms-input-placeholder {
+      color: scale-color(#000, $lightness: 60%);
+    }
+    &:-moz-placeholder {
+      color: scale-color(#000, $lightness: 60%);
+    }
+  }
+  @media screen and (min-width: $tablet) {
+    top: 50%;
+    transform: translateY(-50%) translateX(-50%);
+  }
+}
+
+.location-change-modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  padding: 0 10px;
+  background: #fff;
+  opacity: 0.95;
+}
+
+.modal-open {
+  display: block;
+}
+
+.pac-container {
+  position: fixed !important;
+  top: calc(50% + 30px) !important;
+}
+
+.pac-item,
+.pac-item-query {
+  font-size: 25px;
+}
+
+.pac-item {
+  padding: 10px 5px;
+  cursor: pointer;
+}

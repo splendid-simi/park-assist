@@ -20,14 +20,12 @@ map.directive('map', ['Map', 'Loading', 'Modal', function(Map, Loading, Modal) {
 
     Loading.init($loading,$loadingText);
 
-    // google.maps.event.addDomListener(window, 'load', function() {
-      Map.init(mapCanvas)
-      .then(function(map) {
-        Loading.changeText('Finding your location...');
-        Loading.show();
-        Modal.initAutoComplete();
-      });
-    // });
+    Map.init(mapCanvas)
+    .then(function(map) {
+      Loading.changeText('Finding your location...');
+      Loading.show();
+      Modal.initAutoComplete();
+    });
   };
 
   return {

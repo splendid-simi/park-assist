@@ -24,20 +24,18 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'MapOptions', 'Locator', 'Me
   var findSpot = function(tuple, newDestination) {
     var pSpot;
 
-    Loading.changeText('Finding you the best parking spot...');
-    Loading.show();
-
     if(newDestination) {
       queue = [];
     }
 
     if( pSpot = queue.shift() ) {
       setMeter(pSpot);
-      User.setDestination(meterLoc).then(function(directions) {
-        Loading.hide();
-      });
+      User.setDestination(meterLoc);
       return;
     }
+
+    Loading.changeText('Finding you the best parking spot...');
+    Loading.show();
 
     if(dbUser) {
       dbUser.set(null);
