@@ -86,7 +86,7 @@ We use Firebase to store the data.
 #### Schema
 
 #####MeteredParkingSpots
-* ######MeterID
+* #####MeterID
   * active - Set up with PSA server
   * latitude - Set up with PSA server
   * longitude - Set up with PSA server
