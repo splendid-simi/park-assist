@@ -34,6 +34,45 @@ The Santa Monica Parking API provides information on over 6000 meters. At times 
 We loosely modeled the directory structure from the information in this article:
 https://scotch.io/tutorials/angularjs-best-practices-directory-structure
 
+```
+.
+├── app.js
+├── directions
+│   ├── directionsDisplayService.js
+│   ├── directionsService.js
+│   └── index.js
+├── geocoder
+│   ├── geocoderService.js
+│   └── index.js
+├── loading
+│   ├── index.js
+│   └── loadingService.js
+├── locator
+│   ├── index.js
+│   └── locatorService.js
+├── map
+│   ├── index.js
+│   ├── mapDirective.js
+│   ├── mapOptions.js
+│   ├── mapService.js
+│   └── mapTemplate.html
+├── markers
+│   ├── index.js
+│   ├── meterMarkerService.js
+│   └── userMarkerService.js
+├── modal
+│   ├── index.js
+│   ├── modalDirective.js
+│   ├── modalService.js
+│   └── modalTemplate.html
+├── traffic
+│   ├── index.js
+│   └── trafficService.js
+└── user
+    ├── index.js
+    └── userService.js
+```
+
   * The main is located at src/app.js
       * All app.js does is require all module dependencies
       * There are no controllers in this app.
