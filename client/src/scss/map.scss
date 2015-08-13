@@ -1,42 +1,53 @@
-$mapHeight: 550px;
+$mapHeightDesktop: 450px;
+$mapHeightMobile: 235px;
 
 .map-container {
   position: relative;
-  footer {
-    padding: 15px 0;
-    margin: 0 0 20px 0;
-    border-top: 1px solid #4E4F53;
-    border-bottom: 1px solid #4E4F53;
-  }
+}
+
+.map-footer {
+  max-width: 90%;
+  padding: 15px 0;
+  margin: 0 auto 20px auto;
 }
 
 .map-link {
-  text-align: center;
-  text-transform: uppercase;
-  span {  
-    position: relative;
-    cursor: pointer;
-    &:before {
-      content: '';
-      height: 2px;
-      width: 0;
-      background: #000;
-      transition: width 0.5s ease;
-      position: absolute;
-      bottom: 0;
-    }
-    &:hover {
-      &:before {
-        width: 100%;
-      }
-    }
+  display: block;
+  margin: 0 auto 10px auto;
+  padding: 0;
+  border-bottom: 1px solid transparent;
+  word-spacing: 0.1em;
+  font-size: 25px;
+  transition: all 0.5s ease;
+  &:hover {
+    border-color: #000;
+  }
+  @media screen and (min-width: $mobile) {
+    font-size: 35px;
+  }
+}
+
+.another-spot {
+  @media screen and (min-width: $tablet) {
+    float: left;
+  }
+}
+
+.change-destination {
+  @media screen and (min-width: $tablet) {
+    float: right;
   }
 }
 
 #map-canvas { 
-  height: $mapHeight;
+  height: $mapHeightMobile;
   margin: 0 0 20px 0;
   padding: 0;
+  border-radius: 10px;
+  box-shadow: 0 0 15px -1px rgba(0,0,0,0.75);
+  @media screen and (min-width: $mobile) {
+    height: $mapHeightDesktop;
+  }
 }
 
 .info-bubble {
@@ -58,18 +69,37 @@ $mapHeight: 550px;
 
 @keyframes mapFadeOut {
   0% {
-    height: $mapHeight;
+    height: $mapHeightMobile;
     opacity: 0.85;
   }
 
   90% {
-    height: $mapHeight;
+    height: $mapHeightMobile;
     opacity: 0;
   }
 
   91%, 100% {
     opacity: 0;
     height: 0;
+  }
+}
+
+@media screen and (min-width: $mobile) {
+  @keyframes mapFadeOut {
+    0% {
+      height: $mapHeightDesktop;
+      opacity: 0.85;
+    }
+
+    90% {
+      height: $mapHeightDesktop;
+      opacity: 0;
+    }
+
+    91%, 100% {
+      opacity: 0;
+      height: 0;
+    }
   }
 }
 
@@ -83,96 +113,30 @@ $mapHeight: 550px;
   p {
     width: 100%;
     position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
+    top: 25%;
     margin: 0;
     font-size: 25px;
     text-align: center;
+    @media screen and (min-width: $mobile) {
+      top: 50%;
+      transform: translateY(-50%);
+    }
   }
 }
 
 .show {
-  height: $mapHeight;
+  height: $mapHeightMobile;
   animation: mapFadeIn 1s ease 0s 1 normal both;
+  @media screen and (min-width: $mobile) {
+    height: $mapHeightDesktop;
+  }
 }
 
 .hexdots-loader {
   position: absolute;
-  top: 70%;
+  top: 60%;
   left: 50%;
-}
-
-.location-input {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  width: 25%;
-  padding: 15px 5px;
-  margin: 0;
-  border: 1px solid #000;
-  transform: translateY(-50%) translateX(-50%);
-  font-size: 24px;
-  -webkit-appearance: none;
-  -moz-appearance:    none;
-  outline: none;
-  &::-webkit-input-placeholder {
-    color: #000;
-    text-transform: uppercase;
+  @media screen and (min-width: $mobile) {
+    top: 70%;
   }
-  &::-moz-placeholder {
-    color: #000;
-    text-transform: uppercase;
-  }
-  &:-ms-input-placeholder {
-    color: #000;
-    text-transform: uppercase;
-  }
-  &:-moz-placeholder {
-    color: #000;
-    text-transform: uppercase;
-  }
-  &:focus {
-    &::-webkit-input-placeholder {
-      color: scale-color(#000, $lightness: 60%);
-    }
-    &::-moz-placeholder {
-      color: scale-color(#000, $lightness: 60%);
-    }
-    &:-ms-input-placeholder {
-      color: scale-color(#000, $lightness: 60%);
-    }
-    &:-moz-placeholder {
-      color: scale-color(#000, $lightness: 60%);
-    }
-  }
-}
-
-.location-change-modal {
-  display: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  height: 100%;
-  width: 100%;
-  background: #fff;
-  opacity: 0.75;
-}
-
-.modal-open {
-  display: block;
-}
-
-.pac-container {
-  position: fixed !important;
-  top: calc(50% + 30px) !important;
-}
-
-.pac-item,
-.pac-item-query {
-  font-size: 18px;
-}
-
-.pac-item {
-  padding: 10px 5px;
-  cursor: pointer;
 }
