@@ -5,6 +5,8 @@ modal.factory('Modal', ['Map', 'Geocoder', function(Map, Geocoder) {
 
   var $changeDest, $modal, $input, input, autocomplete;
 
+  var $htmlBody = $('html,body');
+
   var initModal = function(el) {
     $modal = $(el);
 
@@ -31,12 +33,18 @@ modal.factory('Modal', ['Map', 'Geocoder', function(Map, Geocoder) {
   };
 
   var close = function() {
+    $htmlBody.removeClass('fixed');
     $modal.removeClass('modal-open');
     input.value = '';
   };
 
   var open = function() {
     $modal.addClass('modal-open');
+    $htmlBody.animate({
+      scrollTop: 0
+    }, 500, 'swing', function() {
+      $htmlBody.addClass('fixed');
+    });
     input.focus();
   };
 
@@ -47,6 +55,7 @@ modal.factory('Modal', ['Map', 'Geocoder', function(Map, Geocoder) {
     autocomplete.bindTo('bounds', Map.getMap());
 
     google.maps.event.addListener(autocomplete, 'place_changed', function() {
+
       var place = autocomplete.getPlace();
       var $pacItemQuery = $('.pac-container .pac-item:first .pac-item-query');
       var address = $pacItemQuery.text() + ' ' + $pacItemQuery.next().text();
@@ -76,7 +85,6 @@ modal.factory('Modal', ['Map', 'Geocoder', function(Map, Geocoder) {
         alertify.message(error);
         input.focus();
       });
-
     });
   };
 
