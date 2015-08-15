@@ -94,7 +94,10 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
 
     var imgSrc = 'https://maps.googleapis.com/maps/api/streetview?size='+bubbleWidth+'x'+bubbleWidth+'&location='+lat+','+lng+'&fov=120&heading=235&pitch=10';
 
-    Geocoder.parseLatLng(lat,lng).then(function(address) {
+    Geocoder.parseLatLng(lat,lng)
+    .then(function(addressInfo) {
+      var addressComponents = addressInfo.address_components;
+      var address = addressComponents[0].long_name + ' ' + addressComponents[1].long_name;
 
       infoBubble = addInfoBubble(map,imgSrc,address);
 

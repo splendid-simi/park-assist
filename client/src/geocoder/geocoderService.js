@@ -15,9 +15,7 @@ geocoder.factory('Geocoder', [function() {
     geocoder.geocode(geocodeOptions, function(results, status) {
       if (status == google.maps.GeocoderStatus.OK) {
         if (results[0]) {
-          var addressComponents = results[0].address_components;
-          var address = addressComponents[0].long_name + ' ' + addressComponents[1].long_name;
-          deferred.resolve(address);
+          deferred.resolve(results[0]);
         } else {
           deferred.reject('No results found');
         }
