@@ -1,8 +1,10 @@
 var map = angular.module('parkAssist.map');
 var Q = require('q');
+var alertify = require('alertify');
 
-map.factory('Map', ['Traffic', 'DirectionsDisplay', 'MapOptions', 'Locator', 'MeterMarkers', 'User', 'Loading', function(Traffic, DirectionsDisplay, MapOptions, Locator, MeterMarkers, User, Loading) {
+map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'Locator', 'MeterMarkers', 'User', 'Loading', function(Traffic, DirectionsDisplay, Geocoder, MapOptions, Locator, MeterMarkers, User, Loading) {
   var map, center, dbUser, meterLoc;
+  var firstSpotInitialized = false;
   var userInitialized = false;
   var range = 0.2;
   var queue = [];
@@ -28,9 +30,16 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'MapOptions', 'Locator', 'Me
       queue = [];
     }
 
-    if( pSpot = queue.shift() ) {
-      setMeter(pSpot);
-      User.setDestination(meterLoc);
+    if(firstSpotInitialized && !newDestination) {
+      pSpot = queue.shift();
+
+      if(pSpot) {
+        setMeter(pSpot);
+        User.setDestination(meterLoc);
+        return;
+      }
+
+      alertify.alert('There are no parking spots in this area at this time.');
       return;
     }
 
@@ -42,7 +51,7 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'MapOptions', 'Locator', 'Me
     }
 
     //variables to help navigate to the best parking space
-    var firstSpotInitialized = false;
+    firstSpotInitialized = false;
 
     //Create a user and get the key
     Locator.createUser(tuple,range)
@@ -100,7 +109,21 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'MapOptions', 'Locator', 'Me
     deferred.resolve(map);
 
     window.navigator.geolocation.getCurrentPosition(function(pos) {
-      findSpot([pos.coords.latitude, pos.coords.longitude]);
+
+      var lat = pos.coords.latitude;
+      var lng = pos.coords.longitude;
+
+      Geocoder.parseLatLng(lat,lng).then(function(addressInfo) {
+        if( addressInfo.formatted_address.match(/Santa Monica/) ) {
+          findSpot([lat,lng]);
+          return;
+        }
+
+        Loading.hide();
+        alertify.alert('You are outside of Santa Monica. Please select a Santa Monica destination.');
+      });
+
+
     }, null);
 
     return deferred.promise;
