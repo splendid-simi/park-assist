@@ -139,3 +139,8 @@ We use Firebase to store the data.
     * range - auto set
     * Recomendations
     * array of objects with MeterID: {active, latitude, longitude, mostRecentEvent, timeStamp} same format as MeteredParkingSpots.
+
+###Application Flow
+
+![alt text](https://github.com/rodocite/splendid-simi/blob/dev/applicationflow.jpg)
+
