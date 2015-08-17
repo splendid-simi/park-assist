@@ -2,7 +2,7 @@ var map = angular.module('parkAssist.map');
 var Q = require('q');
 var alertify = require('alertify');
 
-map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'Locator', 'MeterMarkers', 'User', 'Loading', function(Traffic, DirectionsDisplay, Geocoder, MapOptions, Locator, MeterMarkers, User, Loading) {
+map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'Locator', 'MeterMarkers', 'User', '$rootScope', function(Traffic, DirectionsDisplay, Geocoder, MapOptions, Locator, MeterMarkers, User, $rootScope) {
   var map, center, dbUser, meterLoc;
   var firstSpotInitialized = false;
   var userInitialized = false;
@@ -43,8 +43,8 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
       return;
     }
 
-    Loading.changeText('Finding you the best parking spot...');
-    Loading.show();
+    $rootScope.$broadcast('parkAssist:changeLoadingText','Finding you the best parking spot...');
+    $rootScope.$broadcast('parkAssist:showLoadingText');
 
     if(dbUser) {
       dbUser.set(null);
@@ -71,7 +71,7 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
 
         if(userInitialized) {
           User.setDestination(meterLoc).then(function(directions) {
-            Loading.hide();
+            $rootScope.$broadcast('parkAssist:hideLoadingText');
           });
         }
 
@@ -81,7 +81,7 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
         .then(function(userLocation) {
           map.panTo(userLocation);
           userInitialized = true;
-          Loading.hide();
+          $rootScope.$broadcast('parkAssist:hideLoadingText');
         });
       });
     });
@@ -119,7 +119,7 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
           return;
         }
 
-        Loading.hide();
+        $rootScope.$broadcast('parkAssist:hideLoadingText');
         alertify.alert('You are outside of Santa Monica. Please select a Santa Monica destination.');
       });
 

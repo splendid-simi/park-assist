@@ -1,5 +1,5 @@
 var loading = angular.module('parkAssist.loading',[]);
 
-require('./loadingService');
+require('./loadingDirective');
 
 module.exports = loading;
