@@ -35,7 +35,7 @@ The Santa Monica Parking API provides information on over 6000 meters. At times 
   * **Directions API** - Path calculation and rendering
   * **Geocoding API** - Coordinate calculation via address strings or Latitude/Longitude tuples
 
-##Front End:
+##Front End
 
 ###Client Application Information
 We loosely modeled the directory structure from the information in this article:
