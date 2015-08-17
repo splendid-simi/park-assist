@@ -51,10 +51,6 @@ js
 ├── geocoder
 │   ├── geocoderService.js
 │   └── index.js
-├── loading
-│   ├── index.js
-│   └── loadingDirective.js
-│   └── loadingTemplate.html
 ├── locator
 │   ├── index.js
 │   └── locatorService.js
@@ -92,20 +88,16 @@ js
   * Primary functionality is split up into custom directives
     * **Map** - You will probably be most concerned with this.
     * **Modal**
-    * **Loading**
     * **Team**
 
-  * ng services and directives are arranged into separate directories (named by functionality) that contains an index.js that requires the service into a module of the same name
-    * **Directions Service** - Calculates and renders paths on Google Maps.
-    * **Geocoder Service** - Parses to Latitude/Longitude coordinates into a LatLng object w/ useful location data. Parses street address strings into LatLng objects.
-    * **Loading Directive** - Helper functions for displaying information and views during intermission (loading, waiting for directions, etc). JQuery heavy for DOM selection.
-    * **Locator Service** - Functionality for creating user based on browser user location. Each unique user location is posted into the database as a unique user on Geolocation resolution.
-    * **Map Directive** - Map initialization, logic for setting parking spot marker when meter is found and returning an instance of the map initialized on the DOM.
-    * **Markers Service** - Map marker methods for User and Parking Meters.
-    * **Modal Directive** - Overlay functions for when the user clicks 'Change My Destination'. JQuery heavy for DOM selection.
-    * **Team Directive** - Team section.
-    * **Traffic Service** - Traffic layer for Google Maps. Minimal ng service ideal for studying the code base file structure.
-    * **User Service** - Watches user position through browser Geolocation data. Heavy dependency on Directions service.
+  * ng services are arranged into separate directories w/ an index.js that requires the service into a module of the same name
+    * **Directions** - Calculates and renders path on Google Maps.
+    * **Geocoder** - Parses to Latitude/Longitude coordinates into a LatLng object w/ useful location data. Parses street address strings into LatLng objects.
+    * **Locator** - Functionality for creating user based on browser user location. Each unique user location is posted into the database as a unique user on Geolocation resolution.
+    * **Map** - Map initialization, logic for setting parking spot marker when meter is found and returning an instance of the map initialized on the DOM.
+    * **Markers** - Map marker methods for User and Parking Meters.
+    * **Traffic** - Traffic layer for Google Maps. Minimal ng service ideal for studying the code base file structure.
+    * **User** - Watches user position through browser Geolocation data. Heavy dependency on Directions service.
 
 ###Buttons
 * **Show Me Another Spot** - Shows the user another candidate spot taken from the queue of meters.

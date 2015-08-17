@@ -1,12 +1,30 @@
 var map = angular.module('parkAssist.map');
 
-map.directive('map', ['Map', 'Modal', '$rootScope', function(Map, Modal, $rootScope) {
+map.directive('map', ['Map', 'Modal', function(Map, Modal) {
+
+  var loading = function(scope, $loading, $loadingText) {
+    scope.$on('parkAssist:changeLoadingText', function(e,text) {
+      $loadingText.text(text);
+    });
+
+    scope.$on('parkAssist:showLoadingText', function(e) {
+      $loading.addClass('show');
+    });
+
+    scope.$on('parkAssist:hideLoadingText', function(e) {
+      $loading.removeClass('show');
+    });
+  };
   
   var loadMap = function(scope, element, attrs) {
     var $el = $(element);
     var mapCanvas = $el.find('#map-canvas')[0];
     var $changeDest = $el.find('.change-destination');
     var $anotherSpot = $el.find('.another-spot');
+    var $loading = $el.find('.loading');
+    var $loadingText = $loading.find('.loading-text');
+
+    loading(scope, $loading, $loadingText);
 
     $changeDest.on('click',function(e) {
       Modal.open();
@@ -17,9 +35,9 @@ map.directive('map', ['Map', 'Modal', '$rootScope', function(Map, Modal, $rootSc
     });
 
     Map.init(mapCanvas)
-    .then(function(map) {
-      $rootScope.$broadcast('parkAssist:changeLoadingText', 'Finding your location...');
-      $rootScope.$broadcast('parkAssist:showLoadingText');
+    .then(function() {
+      scope.$broadcast('parkAssist:changeLoadingText', 'Finding your location...');
+      scope.$broadcast('parkAssist:showLoadingText');
       Modal.initAutoComplete();
     });
   };

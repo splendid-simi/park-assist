@@ -6,7 +6,6 @@ var ParkAssist = angular.module('ParkAssist', [
   'ui.router',
   require('./directions').name,
   require('./geocoder').name,
-  require('./loading').name,
   require('./locator').name,
   require('./map').name,
   require('./markers').name,
