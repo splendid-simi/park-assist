@@ -31,7 +31,7 @@ map.directive('map', ['Map', 'Loading', 'Modal', function(Map, Loading, Modal) {
   return {
     restrict: 'E',
     replace: true,
-    templateUrl: 'src/map/mapTemplate.html',
+    templateUrl: 'js/map/mapTemplate.html',
     link: loadMap
   };
 }]);

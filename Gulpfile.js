@@ -16,8 +16,8 @@ var reload = bs.reload;
 var paths = {
   dist: 'client/dist',
   scripts: {
-    src: 'client/src/**/*.js',
-    app: 'client/src/app.js',
+    src: 'client/js/**/*.js',
+    app: 'client/js/app.js',
     libSrcs: ['client/lib/bower/angular/angular.js',
       'client/lib/bower/angular-ui-router/release/angular-ui-router.js',
       'client/lib/bower/jquery/dist/jquery.js'],
@@ -25,8 +25,8 @@ var paths = {
   },
   html: ['client/**/*.html'],
   scss: {
-    srcs: 'client/src/**/*.scss',
-    main: 'client/src/scss/style.scss'
+    srcs: 'client/scss/**/*.scss',
+    main: 'client/scss/style.scss'
   },
   styles: {
     libSrcs: ['client/lib/bower/normalize.css/normalize.css'],
@@ -76,13 +76,13 @@ gulp.task('libJS', function() {
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('minJS', function() {
+gulp.task('minJS', ['libJS', 'js'], function() {
   return gulp.src(paths.scripts.dist)
     .pipe(uglify())
     .pipe(gulp.dest(paths.dist));
 });
 
-gulp.task('minCSS', function() {
+gulp.task('minCSS', ['libCSS', 'scss'], function() {
   return gulp.src(paths.styles.dist)
     .pipe(cssmin())
     .pipe(gulp.dest(paths.dist));
