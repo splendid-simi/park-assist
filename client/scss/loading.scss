@@ -5,16 +5,18 @@
   position: absolute;
   top: 0;
   animation: mapFadeOut 1s ease 0s 1 normal both;
-  p {
-    width: 100%;
-    position: absolute;
-    top: 25%;
-    margin: 0;
-    text-align: center;
-    @media screen and (min-width: $mobile) {
-      top: 50%;
-      transform: translateY(-50%);
-    }
+}
+
+.loading-text {
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 25%;
+  margin: 0;
+  text-align: center;
+  @media screen and (min-width: $mobile) {
+    top: 50%;
+    transform: translateY(-50%);
   }
 }
 
@@ -23,6 +25,9 @@
   animation: mapFadeIn 1s ease 0s 1 normal both;
   @media screen and (min-width: $mobile) {
     height: $mapHeightDesktop;
+  }
+  .loading-text {
+    display: block;
   }
 }
 

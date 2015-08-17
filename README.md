@@ -41,7 +41,7 @@ We loosely modeled the directory structure from the information in this article:
 https://scotch.io/tutorials/angularjs-best-practices-directory-structure
 
 ```
-src
+js
 ├── app.js
 ├── directions
 │   ├── directionsDisplayService.js
@@ -78,7 +78,7 @@ src
     ├── index.js
     └── userService.js
 ```
-  * The main is located at src/app.js
+  * The main is located at js/app.js
       * All app.js does is require all module dependencies
       * There are no controllers in this app.
 

@@ -17,7 +17,8 @@
 
 .git-link-container {
   display: block;
-  margin: 0 auto;
+  margin: 0 auto 30px auto;
+  padding: 0;
 }
 
 .main-footer {
@@ -42,7 +43,7 @@
 }
 
 .mks-love {
-  margin: 0 0 10px 0;
+  margin: 0 0 35px 0;
   text-align: center;
   @media screen and (min-width: $tablet-large) {
     float: right;

@@ -47,7 +47,7 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
   var addInfoBubble = function(map, imgSrc, address) {
     var bubbleContent = '<div class="info-bubble">'+
       '<img src="'+imgSrc+'" />'+
-      '<p class="md-body-1">'+address+'</p>'+
+      '<p class="address">'+address+'</p>'+
       '</div>';
 
     return new InfoBubble({

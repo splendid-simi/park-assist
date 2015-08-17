@@ -48,9 +48,12 @@ $mapHeightMobile: 235px;
 
 .info-bubble {
   cursor: pointer;
-  p {
-    margin: 0;
-  }
+}
+
+.address {
+  margin: 0;
+  padding: 0 0 10px 0;
+  font-size: 20px;
 }
 
 @keyframes mapFadeIn {

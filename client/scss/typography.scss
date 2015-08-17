@@ -5,11 +5,13 @@
 }
 
 html,
-.pac-container {
+.pac-container,
+.gm-style {
   font-family: Ailerons, 'Helvetica Neue', sans-serif;
 }
 
 h1 {
+  display: none;
   margin: 40px 0;
   text-transform: uppercase;
   text-align: center;

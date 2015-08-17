@@ -12,7 +12,8 @@ var ParkAssist = angular.module('ParkAssist', [
   require('./markers').name,
   require('./modal').name,
   require('./traffic').name,
-  require('./user').name
+  require('./user').name,
+  require('./team').name
 ]);
 
 ParkAssist.config(['$urlRouterProvider', function($urlRouterProvider) {

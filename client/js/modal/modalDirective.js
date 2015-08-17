@@ -8,7 +8,7 @@ modal.directive('modal', ['Modal', function(Modal) {
   return {
     restrict: 'E',
     replace: true,
-    templateUrl: 'src/modal/modalTemplate.html',
+    templateUrl: 'js/modal/modalTemplate.html',
     link: link
   };
 }]);
