@@ -1,0 +1,45 @@
+@font-face {
+ font-family: 'Ailerons';
+ src: url('../../fonts/Ailerons/Ailerons.ttf') format('truetype');
+ font-weight: 400;
+}
+
+html,
+.pac-container,
+.gm-style {
+  font-family: Ailerons, 'Helvetica Neue', sans-serif;
+}
+
+h1 {
+  display: none;
+  margin: 40px 0;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+button {
+  outline: 0;
+  border: 0;
+  background: none;
+  border-radius: 0;
+}
+
+a {
+  color: #000;
+  text-decoration: none;
+  padding: 0 0 3px 0;
+  border-bottom: 2px solid transparent;
+  transition: all 0.5s ease;
+  &:hover {
+    border-color: #000;
+  }
+}
+
+button,
+p {
+  margin: 0;
+  font-size: 25px;
+  @media screen and (min-width: $mobile) {
+    font-size: 35px;
+  }
+}
