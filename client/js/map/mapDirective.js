@@ -1,6 +1,6 @@
 var map = angular.module('parkAssist.map');
 
-map.directive('map', ['Map', 'Modal', function(Map, Modal) {
+map.directive('map', ['Map', '$rootScope', function(Map, $rootScope) {
 
   var loading = function(scope, $loading, $loadingText) {
     scope.$on('parkAssist:changeLoadingText', function(e,text) {
@@ -27,7 +27,7 @@ map.directive('map', ['Map', 'Modal', function(Map, Modal) {
     loading(scope, $loading, $loadingText);
 
     $changeDest.on('click',function(e) {
-      Modal.open();
+      $rootScope.$broadcast('parkAssist:openModal');
     });
 
     $anotherSpot.on('click',function(e) {
@@ -38,7 +38,6 @@ map.directive('map', ['Map', 'Modal', function(Map, Modal) {
     .then(function() {
       scope.$broadcast('parkAssist:changeLoadingText', 'Finding your location...');
       scope.$broadcast('parkAssist:showLoadingText');
-      Modal.initAutoComplete();
     });
   };
 
