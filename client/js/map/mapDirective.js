@@ -1,12 +1,10 @@
 var map = angular.module('parkAssist.map');
 
-map.directive('map', ['Map', 'Loading', 'Modal', function(Map, Loading, Modal) {
+map.directive('map', ['Map', 'Modal', '$rootScope', function(Map, Modal, $rootScope) {
   
   var loadMap = function(scope, element, attrs) {
     var $el = $(element);
     var mapCanvas = $el.find('#map-canvas')[0];
-    var $loading = $el.find('.loading');
-    var $loadingText = $el.find('.loading-text');
     var $changeDest = $el.find('.change-destination');
     var $anotherSpot = $el.find('.another-spot');
 
@@ -18,12 +16,10 @@ map.directive('map', ['Map', 'Loading', 'Modal', function(Map, Loading, Modal) {
       Map.findSpot();
     });
 
-    Loading.init($loading,$loadingText);
-
     Map.init(mapCanvas)
     .then(function(map) {
-      Loading.changeText('Finding your location...');
-      Loading.show();
+      $rootScope.$broadcast('parkAssist:changeLoadingText', 'Finding your location...');
+      $rootScope.$broadcast('parkAssist:showLoadingText');
       Modal.initAutoComplete();
     });
   };
