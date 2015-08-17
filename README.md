@@ -28,6 +28,12 @@ The Santa Monica Parking API provides information on over 6000 meters. At times 
   5. gulp - run the app on a local server
   6. Visit http://localhost:8000/ on your browser
 
+####Google Developer Console API Dependencies:
+  * **Google Maps JavaScript API v3** - Google Maps functionality via JS
+  * **Google Maps Embed API** - Embeds your maps on different pages
+  * **Directions API** - Path calculation and rendering
+  * **Geocoding API** - Coordinate calculation via address or Latitude/Longitude
+
 ##Front End:
 
 ###Client Application Information
