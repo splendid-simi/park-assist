@@ -8,7 +8,7 @@ Parking is near impossible to find in Santa Monica. In addition, the information
 Web app to take the decision making away from parking at meters in Santa Monica, CA. It will choose the closest confirmed open parking meter for you.
 
 ##Strategy
-The Santa Monica Parking API provides information on over 6000 meters. At times over 100 events are added in less than a minute. We took this wealth of data and processed it behind the scenes using two different servers, and a client app to create a streamlined presentation of the most useful information for someone looking for a parking spot.
+The Santa Monica Parking API provides information on 6700+ meters local to Santa Monica. Hundreds of meter events are sent to the API per minute. We took this data and processed it behind the scenes using two different servers and created a client app that uses that data to facilitate reasonable and responsive meter parking decisions for the user.
 
 ## Developer Documentation
 
@@ -115,7 +115,7 @@ js
 
 ###Server Information
 
-This application has two servers:
+This application uses two servers:
 
 * **"Parking Spot Analyzer" Server** - responsible for choosing the meters to be sent to the client. Its logic is stored in server/server.js in the main Parking Assist repository.
 
