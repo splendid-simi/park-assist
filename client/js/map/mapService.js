@@ -5,7 +5,6 @@ var alertify = require('alertify');
 map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'Locator', 'MeterMarkers', 'User', '$rootScope', function(Traffic, DirectionsDisplay, Geocoder, MapOptions, Locator, MeterMarkers, User, $rootScope) {
   var map, center, dbUser, meterLoc;
   var firstSpotInitialized = false;
-  var userInitialized = false;
   var range = 0.2;
   var queue = [];
 
@@ -30,36 +29,47 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
       queue = [];
     }
 
-    if(firstSpotInitialized && !newDestination) {
-      pSpot = queue.shift();
-
-      if(pSpot) {
-        setMeter(pSpot);
-        User.setDestination(meterLoc);
-        return;
-      }
-
-      alertify.alert('There are no parking spots in this area at this time.');
-      return;
-    }
-
     $rootScope.$broadcast('parkAssist:changeLoadingText','Finding you the best parking spot...');
     $rootScope.$broadcast('parkAssist:showLoadingText');
 
+    // If user already has a spot and is just requesting a new one
+    if(firstSpotInitialized && !newDestination) {
+      pSpot = queue.shift();
+
+      if(!pSpot) {
+        $rootScope.$broadcast('parkAssist:hideLoadingText');
+        alertify.alert('There are no parking spots in this area at this time.');
+        return;
+      }
+
+      setMeter(pSpot);
+      User.setDestination(meterLoc);
+      User.calcRoute()
+      .then(function() {
+        $rootScope.$broadcast('parkAssist:hideLoadingText');
+      });
+      return;
+    }
+
+    // User has begun a new search, wipe the old user
     if(dbUser) {
       dbUser.set(null);
     }
 
-    //variables to help navigate to the best parking space
     firstSpotInitialized = false;
 
-    //Create a user and get the key
+    // Create a new user
     Locator.createUser(tuple,range)
-    .then(function(dbUser) {
-      //Setup a listener for recommendations, ordered by distance
-      dbUser.child('Recommendations').orderByChild('distance').on('child_added', function(snapshot){
+    .then(function(user) {
+      dbUser = user;
+      // Setup a listener for recommendations, ordered by distance
+      dbUser
+      .child('Recommendations')
+      .orderByChild('distance')
+      .on('child_added', function(snapshot) {
         var pSpot = snapshot.val();
 
+        // If user has a first spot, just push new spots on the queue
         if(firstSpotInitialized) {
           queue.push(pSpot);
           return;
@@ -68,22 +78,15 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
         firstSpotInitialized = true;
 
         setMeter(pSpot);
-
-        if(userInitialized) {
-          User.setDestination(meterLoc).then(function(directions) {
-            $rootScope.$broadcast('parkAssist:hideLoadingText');
-          });
-        }
-
         User.setDestination(meterLoc);
 
-        User.watchPosition(map)
-        .then(function(userLocation) {
-          map.panTo(userLocation);
-          userInitialized = true;
+        User.calcRoute()
+        .then(function() {
           $rootScope.$broadcast('parkAssist:hideLoadingText');
         });
+
       });
+
     });
   };
 
@@ -113,16 +116,21 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
       var lat = pos.coords.latitude;
       var lng = pos.coords.longitude;
 
-      Geocoder.parseLatLng(lat,lng).then(function(addressInfo) {
-        if( addressInfo.formatted_address.match(/Santa Monica/) ) {
-          findSpot([lat,lng]);
+      Geocoder.parseLatLng(lat,lng)
+      .then(function(addressInfo) {
+        if( !addressInfo.formatted_address.match(/Santa Monica/) ) {
+          $rootScope.$broadcast('parkAssist:hideLoadingText');
+          alertify.alert('You are outside of Santa Monica. Please select a Santa Monica destination.');
           return;
         }
 
-        $rootScope.$broadcast('parkAssist:hideLoadingText');
-        alertify.alert('You are outside of Santa Monica. Please select a Santa Monica destination.');
-      });
+        User.watchPosition(map)
+        .then(function(userLocation) {
+          map.panTo(userLocation);
+        });
 
+        findSpot([lat,lng]);
+      });
 
     }, null);
 
