@@ -94,9 +94,35 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
     return map;
   };
 
-  var init = function(mapCanvas) {
-    var deferred = Q.defer();
+  var getCurrentLocation = function() {
+    window.navigator.geolocation.getCurrentPosition(function(pos) {
 
+      var lat = pos.coords.latitude;
+      var lng = pos.coords.longitude;
+
+      Geocoder.parseLatLng(lat,lng)
+      .then(function(addressInfo) {
+
+        User.watchPosition(map)
+        .then(function(userLocation) {
+          map.panTo(userLocation);
+          $rootScope.$broadcast('parkAssist:initAutoComplete');
+        });
+
+        if( !addressInfo.formatted_address.match(/Santa Monica/) ) {
+          $rootScope.$broadcast('parkAssist:hideLoadingText');
+          alertify.alert('You are outside of Santa Monica. Please select a Santa Monica destination.');
+          firstSpotInitialized = true;
+          return;
+        }
+
+        findSpot([lat,lng]);
+      });
+
+    }, null);
+  };
+
+  var init = function(mapCanvas) {
     map = new google.maps.Map(mapCanvas, MapOptions);
     DirectionsDisplay.setMap(map);
     Traffic.showTraffic(map);
@@ -109,32 +135,10 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
       map.setCenter(center);
     });
 
-    deferred.resolve(map);
+    $rootScope.$broadcast('parkAssist:changeLoadingText', 'Finding your location...');
+    $rootScope.$broadcast('parkAssist:showLoadingText');
 
-    window.navigator.geolocation.getCurrentPosition(function(pos) {
-
-      var lat = pos.coords.latitude;
-      var lng = pos.coords.longitude;
-
-      Geocoder.parseLatLng(lat,lng)
-      .then(function(addressInfo) {
-        if( !addressInfo.formatted_address.match(/Santa Monica/) ) {
-          $rootScope.$broadcast('parkAssist:hideLoadingText');
-          alertify.alert('You are outside of Santa Monica. Please select a Santa Monica destination.');
-          return;
-        }
-
-        User.watchPosition(map)
-        .then(function(userLocation) {
-          map.panTo(userLocation);
-        });
-
-        findSpot([lat,lng]);
-      });
-
-    }, null);
-
-    return deferred.promise;
+    getCurrentLocation();
   };
 
   return {
