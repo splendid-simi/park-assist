@@ -50,7 +50,7 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
       '<p class="address">'+address+'</p>'+
       '</div>';
 
-    return new InfoBubble({
+    var infoBubbleOptions = {
       content: bubbleContent,
       maxWidth: bubbleWidth,
       shadowStyle: 1,
@@ -65,7 +65,9 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
       arrowPosition: 30,
       arrowStyle: 2,
       map: map
-    });
+    };
+
+    return new InfoBubble(infoBubbleOptions);
   };
 
   var addMarker = function(map, active, LatLng) {
