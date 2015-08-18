@@ -83,8 +83,7 @@ modal.directive('modal', ['Map', 'Geocoder', '$rootScope', function(Map, Geocode
       closeModal();
     });
 
-    initAutoComplete();
-
+    scope.$on('parkAssist:mapInit', initAutoComplete);
     scope.$on('parkAssist:closeModal', closeModal);
     scope.$on('parkAssist:openModal', openModal);
     scope.$on('parkAssist:modalMessage', modalMessage);
