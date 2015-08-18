@@ -1,0 +1,11 @@
+<ul class="team">
+  <li class="team-member" ng-repeat="member in team.members">
+    <a target="_blank" href="{{member.github}}">{{member.name}}</a>
+    <a class="icon-link" target="_blank" href="{{member.github}}">
+      <img src="img/github-glyphicon.png" alt="{{member.name}} Github">
+    </a>
+    <a class="icon-link" target="_blank" href="{{member.linkedin}}">
+      <img src="img/linkedin-icon.png" alt="{{member.name}} Linkedin">
+    </a>
+  </li>
+</ul>

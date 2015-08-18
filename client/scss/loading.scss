@@ -1,0 +1,41 @@
+.loading {
+  height: 0;
+  width: 100%;
+  background-color: #DCE4EF;
+  position: absolute;
+  top: 0;
+  animation: mapFadeOut 1s ease 0s 1 normal both;
+}
+
+.loading-text {
+  display: none;
+  width: 100%;
+  position: absolute;
+  top: 25%;
+  margin: 0;
+  text-align: center;
+  @media screen and (min-width: $mobile) {
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.show {
+  height: $mapHeightMobile;
+  animation: mapFadeIn 1s ease 0s 1 normal both;
+  @media screen and (min-width: $mobile) {
+    height: $mapHeightDesktop;
+  }
+  .loading-text {
+    display: block;
+  }
+}
+
+.hexdots-loader {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  @media screen and (min-width: $mobile) {
+    top: 70%;
+  }
+}

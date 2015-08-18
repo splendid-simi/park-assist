@@ -1,0 +1,103 @@
+$mapHeightDesktop: 450px;
+$mapHeightMobile: 235px;
+
+.map-container {
+  position: relative;
+}
+
+.map-footer {
+  max-width: 90%;
+  margin: 0 auto 20px auto;
+  overflow: auto;
+}
+
+.map-link {
+  display: block;
+  margin: 0 auto 10px auto;
+  padding: 0;
+  border-bottom: 2px solid transparent;
+  word-spacing: 0.1em;
+  transition: all 0.5s ease;
+  &:hover {
+    border-color: #000;
+  }
+}
+
+.another-spot {
+  @media screen and (min-width: $tablet) {
+    float: left;
+  }
+}
+
+.change-destination {
+  @media screen and (min-width: $tablet) {
+    float: right;
+  }
+}
+
+#map-canvas { 
+  height: $mapHeightMobile;
+  margin: 0 0 31px 0;
+  padding: 0;
+  border-radius: 10px;
+  box-shadow: 0 0 15px -1px rgba(0,0,0,0.75);
+  @media screen and (min-width: $mobile) {
+    height: $mapHeightDesktop;
+  }
+}
+
+.info-bubble {
+  cursor: pointer;
+}
+
+.address {
+  margin: 0;
+  padding: 0 0 10px 0;
+  font-size: 20px;
+}
+
+@keyframes mapFadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 0.85;
+  }
+}
+
+@keyframes mapFadeOut {
+  0% {
+    height: $mapHeightMobile;
+    opacity: 0.85;
+  }
+
+  90% {
+    height: $mapHeightMobile;
+    opacity: 0;
+  }
+
+  91%, 100% {
+    opacity: 0;
+    height: 0;
+  }
+}
+
+@media screen and (min-width: $mobile) {
+  @keyframes mapFadeOut {
+    0% {
+      height: $mapHeightDesktop;
+      opacity: 0.85;
+    }
+
+    90% {
+      height: $mapHeightDesktop;
+      opacity: 0;
+    }
+
+    91%, 100% {
+      opacity: 0;
+      height: 0;
+    }
+  }
+}

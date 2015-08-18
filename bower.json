@@ -1,0 +1,25 @@
+{
+  "name": "Park Assist",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/splendid-simi/splendid-simi",
+  "authors": [
+    "Splendid Simi"
+  ],
+  "description": "Boilerplate for personal site deploy assignment",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "client/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.3",
+    "angular-material": "~0.10.0",
+    "angular-ui-router": "~0.2.15",
+    "normalize.css": "~3.0.3",
+    "jquery": "~2.1.4"
+  }
+}

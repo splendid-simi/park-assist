@@ -1,0 +1,103 @@
+.icon-link {
+  display: inline-block;
+  max-width: 25px;
+  margin: 0 5px;
+  vertical-align: text-top;
+  &:hover {
+    border-color: transparent;
+  }
+}
+
+.icon-link-large {
+  max-width: 30px;
+  @media screen and (min-width: $mobile) {
+    max-width: 50px;
+  }
+}
+
+.git-link-container {
+  display: block;
+  margin: 0 auto 30px auto;
+  padding: 0;
+}
+
+.main-footer {
+  width: 90%;
+  overflow: auto;
+  border-top: 1px solid #000;
+  padding: 20px 0;
+  margin: 0 auto;
+}
+
+.footer-left {
+  margin: 0 0 50px 0;
+  @media screen and (min-width: $tablet-large) {
+    float: left;
+  }
+}
+
+.git-link {
+  @media screen and (min-width: $mobile) {
+    font-size: 40px;
+  }
+}
+
+.mks-love {
+  margin: 0 0 35px 0;
+  text-align: center;
+  @media screen and (min-width: $tablet-large) {
+    float: right;
+    text-align: right;
+  }
+}
+
+.mks-icon {
+  display: inline-block;
+  max-width: 30px;
+  vertical-align: middle;
+  &:hover {
+    border-color: transparent;
+  } 
+  @media screen and (min-width: $mobile) {
+    max-width: 50px;
+  }
+}
+
+.frameworks-img {
+  display: block;
+  max-width: 200px;
+  margin: 0 auto;
+  @media screen and (min-width: $tablet-large) {
+    margin: 0;
+  }
+}
+
+.team {
+  max-width: 480px;
+  padding: 0;
+  list-style-type: none;
+  overflow: auto;
+  margin: 0 auto 20px auto;
+  @media screen and (min-width: $tablet-large) {
+    float: right;
+  }
+}
+
+.team-member {
+  margin: 0 0 10px 0;
+  font-size: 25px;
+  text-align: center;
+  a {
+    border-width: 2px;
+  }
+  @media screen and (min-width: $mobile-large) {
+    width: 50%;
+    float: right;
+    text-align: right;
+    &:nth-child(odd) {
+      float: left;
+      text-align: left;
+    }
+  }
+}
+

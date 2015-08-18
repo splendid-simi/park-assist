@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="dist/lib.css">
+    <link rel="stylesheet" href="dist/style.css">
+    <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyDaHdHt1h1Gu9KR8E5dixDcLM5X-a0YJSY&libraries=places"></script>
+    <script src='https://cdn.firebase.com/js/client/2.2.1/firebase.js'></script>
+  <title>Park Assist</title>
+</head>
+<body ng-app="ParkAssist">
+
+  <div class="container">
+    <img class="main-title" src="img/ParkAssistLogo.png" alt="Park Assist - Santa Monica">
+
+    <map></map>
+
+    <footer class="main-footer">
+
+      <div class="footer-left">
+        <button class="git-link-container">
+          <a class="git-link" target="_blank" href="https://github.com/splendid-simi/splendid-simi">View on GitHub</a>
+          <a class="icon-link icon-link-large" target="_blank" href="https://github.com/splendid-simi/splendid-simi"><img src="img/github-icon.png" alt="View us on github"></a>
+        </button>
+        <img class="frameworks-img" src="img/framework-bar.png" alt="Angular, Google Maps, Firebase, and Node">
+      </div>
+
+
+      <p class="mks-love">Made with love at <a class="mks-icon" target="_blank" href="http://makersquare.com"><img src="img/mks-icon.png" alt="MakerSquare"></a> by</p>
+
+      <team></team>
+    </footer>
+
+  </div>
+  <modal></modal>
+  <script src="dist/lib.js"></script>
+  <script src="dist/app.js"></script>
+</body>
+</html>
