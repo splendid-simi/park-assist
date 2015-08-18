@@ -109,6 +109,14 @@ js
 
 This application uses two servers:
 
+####IMPORTANT: If you are cloning this repo, create a file in the root directory called firebaselink.js that contains:
+
+module.exports = {
+   url: 'URL for your firebase database'
+}
+
+#####This is so that you can link it to your firebase database.
+
 * **"Parking Spot Analyzer" Server** - responsible for choosing the meters to be sent to the client. Its logic is stored in server/server.js in the main Parking Assist repository.
 
 * **"Cloudify" Server** - used to scrape the events from the City of Santa Monica parking API to keep the database updated. The source code for this server is located in the [dbScrape](https://github.com/splendid-simi/dbScrape) repository.
