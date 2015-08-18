@@ -1,5 +1,6 @@
 var locator = angular.module('parkAssist.locator');
 var Q = require('q');
+var fb_keys = require('../../../firebaselink.js');
 
 locator.factory('Locator', ['$http', function ($http) {
 
@@ -9,7 +10,7 @@ locator.factory('Locator', ['$http', function ($http) {
     console.log('services.js says: createUser called, creating a new user');
     
     //Create a new user on firebase
-    var fb = new Firebase('https://burning-fire-1110.firebaseio.com/');
+    var fb = new Firebase(fb_keys.url);
     var reference = fb.child('Users').push({ latitude: tuple[0], longitude: tuple[1], range: range });
     
     deferred.resolve(reference);

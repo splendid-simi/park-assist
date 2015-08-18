@@ -3,11 +3,12 @@ var middleware = require('./config/middleware.js');
 var http = require('http');
 var request = require('request');
 var Firebase = require('firebase');
+var fb_keys = require('../firebaselink.js');
 
 var app = express();
 middleware(app, express);
 
-app.set('port', process.env.PORT || 8000);
+app.set('port', process.env.PORT || 8080);
 
 //Helper Functions
 //Function to calculate the euclidean distance between the user location and a parking spot
@@ -48,7 +49,7 @@ app.post('/api/init', function(req, res) {
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 //Listen for a new user session and adds a user entry on firebase in the Users database
-var firecloud = new Firebase('https://burning-fire-1110.firebaseio.com/');
+var firecloud = new Firebase(fb_keys.url);
 var usersRef = firecloud.child('Users'); //creates a new sub database, 'Users' for user specific location and parking recommendations
 
 usersRef.on('child_added', function(childSnapshot, prevChildKey) {
