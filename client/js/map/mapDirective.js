@@ -38,6 +38,8 @@ map.directive('map', ['Map', '$rootScope', function(Map, $rootScope) {
     .then(function() {
       scope.$broadcast('parkAssist:changeLoadingText', 'Finding your location...');
       scope.$broadcast('parkAssist:showLoadingText');
+
+      $rootScope.$broadcast('parkAssist:mapInit');
     });
   };
 
