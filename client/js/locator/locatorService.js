@@ -6,8 +6,6 @@ locator.factory('Locator', ['$http', function ($http) {
 
   var createUser = function (tuple, range) {
     var deferred = Q.defer();
-
-    console.log('services.js says: createUser called, creating a new user');
     
     //Create a new user on firebase
     var fb = new Firebase(fb_keys.url);
