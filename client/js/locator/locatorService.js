@@ -9,9 +9,9 @@ locator.factory('Locator', ['$http', function ($http) {
     
     //Create a new user on firebase
     var fb = new Firebase(fb_keys.url);
-    var reference = fb.child('Users').push({ latitude: tuple[0], longitude: tuple[1], range: range });
+    var dbUser = fb.child('Users').push({ latitude: tuple[0], longitude: tuple[1], range: range });
     
-    deferred.resolve(reference);
+    deferred.resolve(dbUser);
 
     return deferred.promise;
   };

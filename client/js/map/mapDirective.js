@@ -1,8 +1,15 @@
 var map = angular.module('parkAssist.map');
 
 map.directive('map', ['Map', '$rootScope', function(Map, $rootScope) {
+  
+  var link = function(scope, element, attrs) {
+    var $el = $(element);
+    var mapCanvas = $el.find('#map-canvas')[0];
+    var $changeDest = $el.find('.change-destination');
+    var $anotherSpot = $el.find('.another-spot');
+    var $loading = $el.find('.loading');
+    var $loadingText = $loading.find('.loading-text');
 
-  var loading = function(scope, $loading, $loadingText) {
     scope.$on('parkAssist:changeLoadingText', function(e,text) {
       $loadingText.text(text);
     });
@@ -14,17 +21,6 @@ map.directive('map', ['Map', '$rootScope', function(Map, $rootScope) {
     scope.$on('parkAssist:hideLoadingText', function(e) {
       $loading.removeClass('show');
     });
-  };
-  
-  var loadMap = function(scope, element, attrs) {
-    var $el = $(element);
-    var mapCanvas = $el.find('#map-canvas')[0];
-    var $changeDest = $el.find('.change-destination');
-    var $anotherSpot = $el.find('.another-spot');
-    var $loading = $el.find('.loading');
-    var $loadingText = $loading.find('.loading-text');
-
-    loading(scope, $loading, $loadingText);
 
     $changeDest.on('click',function(e) {
       $rootScope.$broadcast('parkAssist:openModal');
@@ -34,19 +30,13 @@ map.directive('map', ['Map', '$rootScope', function(Map, $rootScope) {
       Map.findSpot();
     });
 
-    Map.init(mapCanvas)
-    .then(function() {
-      scope.$broadcast('parkAssist:changeLoadingText', 'Finding your location...');
-      scope.$broadcast('parkAssist:showLoadingText');
-
-      $rootScope.$broadcast('parkAssist:mapInit');
-    });
+    Map.init(mapCanvas);
   };
 
   return {
     restrict: 'E',
     replace: true,
     templateUrl: 'js/map/mapTemplate.html',
-    link: loadMap
+    link: link
   };
 }]);
