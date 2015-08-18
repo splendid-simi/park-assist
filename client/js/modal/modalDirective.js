@@ -14,11 +14,7 @@ modal.directive('modal', ['Map', 'Geocoder', '$rootScope', function(Map, Geocode
 
   var openModal = function() {
     $modal.addClass('modal-open');
-    $htmlBody.animate({
-      scrollTop: 0
-    }, 500, 'swing', function() {
-      $htmlBody.addClass('fixed');
-    });
+    $htmlBody.addClass('fixed');
     input.focus();
   };
 
