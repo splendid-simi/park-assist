@@ -4,7 +4,7 @@ var Q = require('q');
 geocoder.factory('Geocoder', [function() {
   var geocoder = new google.maps.Geocoder();
 
-  var parseLatLng = function(lat,long) {
+  var parseLatLng = function(lat, long) {
     var latlng = new google.maps.LatLng(lat, long);
     var deferred = Q.defer();
 
