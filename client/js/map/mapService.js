@@ -23,6 +23,7 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
   };
 
   var findSpot = function(tuple, newDestination) {
+
     var pSpot;
 
     if(newDestination) {
@@ -59,9 +60,10 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
     firstSpotInitialized = false;
 
     // Create a new user
-    Locator.createUser(tuple,range)
+    Locator.createUser(tuple, range)
     .then(function(user) {
       dbUser = user;
+
       // Setup a listener for recommendations, ordered by distance
       dbUser
       .child('Recommendations')

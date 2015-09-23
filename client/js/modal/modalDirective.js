@@ -51,7 +51,7 @@ modal.directive('modal', ['Map', 'Geocoder', '$rootScope', function(Map, Geocode
         }
 
         closeModal();
-        Map.findSpot([place.geometry.location.G, place.geometry.location.K], true);
+        Map.findSpot([place.geometry.location.H, place.geometry.location.L], true);
         return;
       }
 
