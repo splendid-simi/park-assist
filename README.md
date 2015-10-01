@@ -1,162 +1,97 @@
 # Park Assist
-####A web application to quickly help you find the closest metered parking spot in Santa Monica, CA.
+#### A web application to quickly help you find the closest metered parking spot in Santa Monica, CA.
 
-##Problem
-Parking is near impossible to find in Santa Monica. In addition, the information in the Santa Monica Parking API is not being fully utilized.
+## Problem
+Parking is near impossible to find in Santa Monica. In addition, the data in the City of Santa Monica Parking API is not being fully utilized.
 
-##Abstract
-Web app to take the decision making away from parking at meters in Santa Monica, CA. It will choose the closest confirmed open parking meter for you.
+## Solution
+A web app that directs you to the closest available parking meter in Santa Monica.
 
-##Strategy
-The Santa Monica Parking API provides information on 6700+ meters local to Santa Monica. Hundreds of meter events are sent to the API per minute. We took this data and processed it behind the scenes using two different servers (following service oriented architecture practices) and created a client app that uses that data to facilitate reasonable and responsive meter parking decisions for the user.
+## Strategy
+The City of Santa Monica Parking API provides information on 6700+ meters local to Santa Monica. Hundreds of meter events are sent to the API per minute. We took this data and processed it behind the scenes using two different servers (following service oriented architecture practices) and created an app that uses that data to facilitate reasonable and responsive meter parking decisions for the user.
 
-## Developer Documentation
+## Dependencies
 
-####Tools Used:
+#### Tools:
 * [AngularJS](https://angularjs.org/)
 * [Firebase](https://www.firebase.com/)
 * [Node.js](https://nodejs.org/)
 * [Express](http://expressjs.com/)
-* [Google Maps APIs](https://developers.google.com/maps/?hl=en/)
+
+#### APIs:
 * [City of Santa Monica Parking Data API](https://parking.api.smgov.net/)
-
-####To start contributing to the Park Assist codebase:
-  1. Fork the repo
-  2. Clone your fork locally
-  3. npm install - server dependencies
-  4. bower install - client dependencies
-  5. Set your Google Maps API key in index.html
-  6. gulp - run the app on a local server
-  7. Visit http://localhost:8000/ on your browser
-
-####Google Developer Console API Dependencies:
+* [Google Maps APIs](https://developers.google.com/maps/?hl=en/)
   * **Google Maps JavaScript API v3** - Google Maps functionality via JS
   * **Google Maps Embed API** - Embeds your maps on different pages
-  * **Directions API** - Path calculation and rendering
-  * **Geocoding API** - Coordinate calculation via address strings or Latitude/Longitude tuples
+  * **Google Maps Directions API** - Path calculation and rendering
+  * **Google Maps Geocoding API** - Coordinate calculation via address strings or Latitude/Longitude tuples
 
-##Front End
+## Installation
+  1. npm install - server dependencies
+  2. bower install - client dependencies
+  3. gulp
 
-###Client Application Information
-We loosely modeled the directory structure from the information in this article:
-https://scotch.io/tutorials/angularjs-best-practices-directory-structure
 
-```
-js
-├── app.js
-├── directions
-│   ├── directionsDisplayService.js
-│   ├── directionsService.js
-│   └── index.js
-├── geocoder
-│   ├── geocoderService.js
-│   └── index.js
-├── locator
-│   ├── index.js
-│   └── locatorService.js
-├── map
-│   ├── index.js
-│   ├── mapDirective.js
-│   ├── mapOptions.js
-│   ├── mapService.js
-│   └── mapTemplate.html
-├── markers
-│   ├── index.js
-│   ├── meterMarkerService.js
-│   └── userMarkerService.js
-├── modal
-│   ├── index.js
-│   ├── modalDirective.js
-│   ├── modalService.js
-│   └── modalTemplate.html
-├── team
-│   ├── index.js
-│   ├── teamController.js
-│   ├── teamDirective.js
-│   └── teamTemplate.html
-├── traffic
-│   ├── index.js
-│   └── trafficService.js
-└── user
-    ├── index.js
-    └── userService.js
-```
-  * The main is located at js/app.js
-      * All app.js does is require all module dependencies
-      * The only controller is used by the team directive.
+
+## Client-Side Info
+
+We loosely modeled the directory structure from the information in [this article](https://scotch.io/tutorials/angularjs-best-practices-directory-structure)
 
   * Primary functionality is split up into custom directives
-    * **Map** - You will probably be most concerned with this.
+    * **Map**
     * **Modal**
-    * **Team**
+    * **Team**    
+  * Services are arranged into separate directories w/ an index.js that requires the service into a module of the same name
+    * **Directions** - Calculates and renders path on Google Maps
+    * **Geocoder** - Parses location data
+    * **Locator** - Creates a database user based on user location
+    * **Map** - Initializes the map
+    * **Markers** - Contains methods for User and Parking Meter models
+    * **Traffic** - Adds a Traffic layer to Google Maps
+    * **User** - Watches user position by monitoring browser geolocation data.
 
-  * ng services are arranged into separate directories w/ an index.js that requires the service into a module of the same name
-    * **Directions** - Calculates and renders path on Google Maps.
-    * **Geocoder** - Parses to Latitude/Longitude coordinates into a LatLng object w/ useful location data. Parses street address strings into LatLng objects.
-    * **Locator** - Functionality for creating user based on browser user location. Each unique user location is posted into the database as a unique user on Geolocation resolution.
-    * **Map** - Map initialization, logic for setting parking spot marker when meter is found and returning an instance of the map initialized on the DOM.
-    * **Markers** - Map marker methods for User and Parking Meters.
-    * **Traffic** - Traffic layer for Google Maps. Minimal ng service ideal for studying the code base file structure.
-    * **User** - Watches user position through browser Geolocation data. Heavy dependency on Directions service.
 
-###Buttons
-* **Show Me Another Spot** - Shows the user another candidate spot taken from the queue of meters.
-* **Enter Another Destination** - This will change the target destination of the user and repeat steps 1-6 above with that location information.
+## Server-Side Info
 
-##Back End
-
-###Server Information
-
-This application uses two servers:
-
-####IMPORTANT: If you are cloning this repo, create a file in the root directory called firebaselink.js that contains:
+#### IMPORTANT: If you are cloning this repo, create a file in the root directory called firebaselink.js that contains:
 
 module.exports = {
    url: 'URL for your firebase database'
-}
+};
 
-#####This is so that you can link it to your firebase database.
+This application uses two servers:
 
-* **"Parking Spot Analyzer" Server** - responsible for choosing the meters to be sent to the client. Its logic is stored in server/server.js in the main Parking Assist repository.
+* **"Parking Spot Analyzer" Server** - responsible for choosing the meters to be sent to the client. Its logic resides in server/server.js.
 
 * **"Cloudify" Server** - used to scrape the events from the City of Santa Monica parking API to keep the database updated. The source code for this server is located in the [dbScrape](https://github.com/splendid-simi/dbScrape) repository.
 
-**Steps to loading up the main page and routing a user to a parking space:**
-
-  1. The client app finds user current location and sends a get request to the PSA server.
-  2. The PSA server stores the current location as a unique user in the firebase database, so that personalized parking recommendations can be stored.
-  3. The PSA server pings Firebase database and iterates through all 6000+ meters stored in the database to find all within 0.2 (default setting) miles away that currently show as empty (or SE) according to the data imported in the Cloudify. The information for the meters are added to an array of meter information objects.
-  4. The PSA server sorts this array of meter information objects by the distance from the user and adds this array of objects under the user information in the database.
-  5. The PSA server responds to the client with the closest spot.
-  6. The client app maps the location on Google Maps.
-
-####Cloudify Server
+#### Cloudify Server
 Cloudify automatically updates the Firebase database with event information for each meter (mostRecentEvent and timeStamp fields only). We split this into a separate server so that the speed of this application would not be affected by the constantly changing meter event information. [The repo can be found here.](https://github.com/splendid-simi/dbScrape/)
 
-### Database Information
+### Database Schema
 
-We use Firebase to store the data.
-
-#### Schema
-
-#####MeteredParkingSpots
-* #####MeterID
-  * active - Set up with PSA server
-  * latitude - Set up with PSA server
-  * longitude - Set up with PSA server
-  *  mostRecentEvent- Continually updated with Cloudify Server
-  *  timeStamp- Continually updated with Cloudify Server
-
-
-* #####Users
-  * Firebase unique identifier
+* ##### MeteredParkingSpots
+  * ##### MeterID
+    * active - Set up once by PSA server
+    * latitude - Set up once by PSA server
+    * longitude - Set up once by PSA server
+    * mostRecentEvent- Continually updated with Cloudify Server
+    * timeStamp- Continually updated with Cloudify Server
+    
+* ##### Users
+  * ##### Firebase unique identifier
     * latitude - from Google Maps API
     * logitude - from Google Maps API
     * range - auto set
-    * Recomendations
-    * array of objects with MeterID: {active, latitude, longitude, mostRecentEvent, timeStamp} same format as MeteredParkingSpots.
+    * Recommendations
+      * array of MeterID objects
 
-###Application Flow
+## Application Flow
+
+  1. The client detects the user's current location and sends a GET request to the PSA server.
+  2. The PSA server stores the location as a unique user in the database so that personalized parking recommendations can be stored.
+  3. The PSA server pings the database and iterates through all 6700+ meters to find the ones within 0.2 miles that currently show as empty (or SE). This data is sure to be accurate as it is continuously updated by the Cloudify server. The meters are added to an array of objects.
+  4. The PSA server sorts this array of meter-information objects by distance and responds to the client with it.
+  5. The client maps the closet meter on the map.
 
 ![alt text](https://github.com/rodocite/splendid-simi/blob/dev/applicationflow.jpg)
-
