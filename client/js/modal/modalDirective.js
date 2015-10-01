@@ -6,7 +6,7 @@ modal.directive('modal', [function() {
   return {
     restrict: 'E',
     replace: true,
-    controller: 'ModalController as ctrl',
+    controller: 'ModalController as modal',
     templateUrl: 'js/modal/modalTemplate.html'
   };
 

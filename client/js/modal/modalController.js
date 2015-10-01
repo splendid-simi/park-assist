@@ -11,39 +11,40 @@ modal.controller('ModalController', ['Map', 'Geocoder', '$rootScope', '$scope', 
   var $htmlBody = $('html, body');
 
   ctrl.closeModal = function(e) {
-
-    var closeModal = function() {
-      ctrl.isOpen = false;
-    };
-
     if( e && e.target === input ) {
       return;
     }
 
-    if(!e) {
-      $scope.$apply(closeModal);
-    } else {
-      closeModal();
-    }
-    
     $htmlBody.removeClass('fixed');
-    ctrl.searchTerm = '';
+
+    $scope.safeApply(function() {
+      ctrl.isOpen = false;
+      ctrl.searchTerm = '';
+    });
   };
 
   ctrl.openModal = function() {
+    $htmlBody.addClass('fixed');
 
-    $scope.$apply(function() {
+    $scope.safeApply(function() {
       ctrl.isOpen = true;
     });
 
-    input.focus();
-    $htmlBody.addClass('fixed');
+    setTimeout(function() {
+      input.focus();
+    }, 0);
   };
 
   ctrl.modalMessage = function(e, message) {
-    ctrl.searchTerm = '';
+    $scope.safeApply(function() {
+      ctrl.searchTerm = '';
+    });
+
     alertify.alert(message);
-    input.focus();
+    
+    setTimeout(function() {
+      input.focus();
+    }, 0);
   };
 
   ctrl.isValidDestination = function(place) {
@@ -88,9 +89,18 @@ modal.controller('ModalController', ['Map', 'Geocoder', '$rootScope', '$scope', 
         Map.findSpot([place.geometry.location.lat(), place.geometry.location.lng()], true);
       })
       .catch(function (error) {
-        modalMessage(null, error);
+        ctrl.modalMessage(null, error);
       });
     });
+  };
+
+  $scope.safeApply = function(fn) {
+    var phase = this.$root.$$phase;
+    if( phase == '$apply' || phase == '$digest' ) {
+      this.$eval(fn);
+    } else {
+      this.$apply(fn);
+    }
   };
 
   $scope.$on('parkAssist:initAutoComplete', ctrl.initAutoComplete);
