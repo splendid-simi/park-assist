@@ -1,13 +1,13 @@
 <section class="map-container">
   <div id="map-canvas"></div>
 
-  <div class="loading">
-    <p class="loading-text"></p>
+  <div class="loading" ng-class="{'show': map.isLoading}">
+    <p class="loading-text" ng-bind="map.loadingText"></p>
     <div class="hexdots-loader"></div>
   </div>
 
   <footer class="map-footer">
-    <button class="map-link another-spot">show me another spot</button>
-    <button class="map-link change-destination">enter another destination</button>
+    <button class="map-link another-spot" ng-click="map.findSpot()">show me another spot</button>
+    <button class="map-link change-destination" ng-click="map.openModal()">enter another destination</button>
   </footer>
 </section>
