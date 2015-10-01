@@ -71,7 +71,7 @@ Cloudify automatically updates the Firebase database with event information for 
 ### Database Schema
 
 * ##### MeteredParkingSpots
-  * ##### MeterID
+  * MeterID
     * active - Set up once by PSA server
     * latitude - Set up once by PSA server
     * longitude - Set up once by PSA server
@@ -79,7 +79,7 @@ Cloudify automatically updates the Firebase database with event information for 
     * timeStamp- Continually updated with Cloudify Server
     
 * ##### Users
-  * ##### Firebase unique identifier
+  * Firebase unique identifier
     * latitude - from Google Maps API
     * logitude - from Google Maps API
     * range - auto set
