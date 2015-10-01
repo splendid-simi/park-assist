@@ -1,4 +1,4 @@
-<div class="location-change-modal">
+<div class="location-change-modal" ng-click="ctrl.closeModal($event)" ng-class="{'modal-open': ctrl.isOpen}">
   <img class="main-title" src="../../img/ParkAssistLogo.png" alt="">
-  <input type="text" class="location-input" placeholder="enter a location" />
+  <input type="text" ng-model="ctrl.searchTerm" class="location-input" placeholder="enter a location" />
 </div>
