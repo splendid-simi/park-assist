@@ -71,8 +71,8 @@ marker.factory('MeterMarkers', ['Geocoder', function(Geocoder) {
   };
 
   var addMarker = function(map, active, LatLng) {
-    var lat = LatLng.H;
-    var lng = LatLng.L;
+    var lat = LatLng.lat();
+    var lng = LatLng.lng();
     var image = {
       url: '../img/parking.png',
       size: new google.maps.Size(50, 50),

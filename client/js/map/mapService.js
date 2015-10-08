@@ -30,7 +30,7 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
       queue = [];
     }
 
-    $rootScope.$broadcast('parkAssist:changeLoadingText','Finding you the best parking spot...');
+    $rootScope.$broadcast('parkAssist:changeLoadingText', 'Finding you the best parking spot...');
     $rootScope.$broadcast('parkAssist:showLoadingText');
 
     // If user already has a spot and is just requesting a new one

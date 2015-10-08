@@ -74,7 +74,8 @@ modal.controller('ModalController', ['Map', 'Geocoder', '$rootScope', '$scope', 
         }
 
         ctrl.closeModal();
-        Map.findSpot([place.geometry.location.H, place.geometry.location.L], true);
+
+        Map.findSpot([place.geometry.location.lat(), place.geometry.location.lng()], true);
         return;
       }
 
