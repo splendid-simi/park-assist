@@ -2,8 +2,6 @@ var map = angular.module('parkAssist.map');
 
 map.controller('MapController', ['Map', '$rootScope', '$scope', function(Map, $rootScope, $scope) {
   var mapCanvas = $('#map-canvas')[0];
-  Map.init(mapCanvas);
-
   var ctrl = this;
 
   ctrl.loadingText = '';
@@ -41,5 +39,7 @@ map.controller('MapController', ['Map', '$rootScope', '$scope', function(Map, $r
       this.$apply(fn);
     }
   };
+
+  Map.init(mapCanvas);
 
 }]);
