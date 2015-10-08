@@ -5,8 +5,9 @@ marker.factory('UserMarker', [function() {
   var marker;
 
   var addMarker = function(map, active, LatLng) {
-    var lat = LatLng.G;
-    var long = LatLng.K;
+
+    var lat = LatLng.lat();
+    var long = LatLng.lng();
     var image = {
       url: '../../img/car.png',
       size: new google.maps.Size(50, 45),
