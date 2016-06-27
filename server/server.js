@@ -3,7 +3,7 @@ var middleware = require('./config/middleware.js');
 var http = require('http');
 var request = require('request');
 var Firebase = require('firebase');
-var fb_keys = process.env.URL || require('../firebaselink.js');
+var fb_keys = process.env.URL || require('../firebaselink.js').url;
 
 var app = express();
 middleware(app, express);
@@ -49,7 +49,7 @@ app.post('/api/init', function(req, res) {
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 //Listen for a new user session and adds a user entry on firebase in the Users database
-var firecloud = new Firebase(fb_keys.url);
+var firecloud = new Firebase(fb_keys);
 var usersRef = firecloud.child('Users'); //creates a new sub database, 'Users' for user specific location and parking recommendations
 
 usersRef.on('child_added', function(childSnapshot, prevChildKey) {
