@@ -3,7 +3,7 @@ var middleware = require('./config/middleware.js');
 var http = require('http');
 var request = require('request');
 var Firebase = require('firebase');
-var fb_keys = require('../firebaselink.js');
+var fb_keys = process.env.URL || require('../firebaselink.js');
 
 var app = express();
 middleware(app, express);
@@ -17,7 +17,7 @@ var distance = function(latU, longU, latP, longP) {
 }
 
 //---------------------------This section is to initalize our own Firebase MeterParkingSpots Database from the Santa Monica API--------------------------
-//GET /api/init 
+//GET /api/init
 app.post('/api/init', function(req, res) {
   console.log('server.js says: POST request for init received.');
 
