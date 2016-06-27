@@ -2,11 +2,11 @@
   "name": "Park Assist",
   "main": "index.js",
   "version": "0.0.0",
-  "homepage": "https://github.com/splendid-simi/splendid-simi",
+  "homepage": "https://github.com/melindabernrdo/park-assist",
   "authors": [
     "Splendid Simi"
   ],
-  "description": "Boilerplate for personal site deploy assignment",
+  "description": "A parking application for Santa Monica CA",
   "ignore": [
     "**/.*",
     "node_modules",

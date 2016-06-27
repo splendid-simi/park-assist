@@ -3,12 +3,13 @@
   "version": "1.0.0",
   "description": "Park Here",
   "main": "index.js",
+  "homepage": "https://github.com/melindabernrdo/park-assist",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
     "postinstall": "bower cache clean && bower install --force-latest && gulp prod"
   },
-  "author": "Splendid Simi",
+  "author": "Melinda Bernardo",
   "license": "ISC",
   "devDependencies": {
   },
