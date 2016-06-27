@@ -57,7 +57,7 @@
   vertical-align: middle;
   &:hover {
     border-color: transparent;
-  } 
+  }
   @media screen and (min-width: $mobile) {
     max-width: 50px;
   }
@@ -85,7 +85,7 @@
 
 .team-member {
   margin: 0 0 10px 0;
-  font-size: 25px;
+  font-size: 22px;
   text-align: center;
   a {
     border-width: 2px;
@@ -100,4 +100,3 @@
     }
   }
 }
-
