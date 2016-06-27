@@ -3,7 +3,7 @@ var middleware = require('./config/middleware.js');
 var http = require('http');
 var request = require('request');
 var Firebase = require('firebase');
-var fb_keys = process.env.URL || require('../firebaselink.js').url;
+var fb_keys = process.env.URL || require('./config/keys.js').url;
 
 var app = express();
 middleware(app, express);
