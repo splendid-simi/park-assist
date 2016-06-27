@@ -19,6 +19,7 @@
     "morgan": "^1.6.1",
     "request": "^2.60.0",
     "q": "^1.4.1",
+    "bower": "^1.7.9",
     "browser-sync": "^2.8.2",
     "browserify": "^11.0.1",
     "browserify-shim": "^3.8.10",
