@@ -4,6 +4,7 @@ var http = require('http');
 var request = require('request');
 var Firebase = require('firebase');
 var fb_keys = process.env.URL || require('./config/keys.js').url;
+var firedb = new Firebase(fb_keys);
 
 var app = express();
 middleware(app, express);
