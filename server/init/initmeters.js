@@ -14,23 +14,21 @@ const initializeMeters = (req, res) => {
   request(url, function(error, response, body) {
     if (error) {
       console.log('Error getting data. Error:', error);
+      res.sendStatus(500);
     }
 
-    if (!error && response.statusCode == 200) {
-      body = JSON.parse(body);
-
-      //One time update of the database with the metered spots info
-      for (var key in body) {
-        //console.log("Value at",key, " is",body[key]);
-        let obj = body[key];
-        db.child("Metered Parking Spots").push({
-          meter_id: obj.meter_id,
-          latitude: obj.latitude,
-          longitude: obj.longitude
-        });
-      }
-      res.send(200);
+    body = JSON.parse(body);
+    //One time update of the database with the metered spots info
+    for (var key in body) {
+      //console.log("Value at",key, " is",body[key]);
+      let obj = body[key];
+      db.child("MeteredParkingSpots").child(obj.meter_id).set({
+        meter_id: obj.meter_id,
+        latitude: obj.latitude,
+        longitude: obj.longitude
+      });
     }
+    res.sendStatus(200);
   });
 }
 
