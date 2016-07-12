@@ -1,0 +1,13 @@
+{
+"01": {"crime": "homicide", "rating": "4"},
+"03": {"crime": "Robbery w/weapon", "rating": "3"},
+"04": {"crime": "Aggrivated Assualt", "rating": "3"},
+"05": {"crime": "Burglary", "rating": "1"},
+"06": {"crime": "larceny", "rating": "1"},
+"07": {"crime": "GTA", "rating": "3"},
+"08": {"crime": "Simple Assualt part 2", "rating": "2"},
+"13": {"crime": "receive stolen property", "rating": "1"},
+"17": {"crime": "sex offense-other", "rating": "1"},
+"21": {"crime": "DUI", "rating": "1"},
+"25": {"crime": "vagrancy", "rating": "1"}
+}
