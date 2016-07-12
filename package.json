@@ -18,15 +18,13 @@
   },
   "dependencies": {
     "body-parser": "^1.13.3",
-    "express": "^4.13.2",
-    "firebase": "^2.2.9",
-    "morgan": "^1.6.1",
-    "request": "^2.60.0",
-    "q": "^1.4.1",
     "bower": "^1.7.9",
     "browser-sync": "^2.8.2",
     "browserify": "^11.0.1",
     "browserify-shim": "^3.8.10",
+    "express": "^4.13.2",
+    "firebase": "^2.2.9",
+    "geodesy": "^1.1.0",
     "gulp": "^3.9.0",
     "gulp-autoprefixer": "^2.3.1",
     "gulp-browserify": "^0.5.1",
@@ -35,7 +33,11 @@
     "gulp-nodemon": "^2.0.3",
     "gulp-sass": "^2.0.4",
     "gulp-sourcemaps": "^1.5.2",
-    "gulp-uglify": "^1.2.0"
+    "gulp-uglify": "^1.2.0",
+    "moment": "^2.14.1",
+    "morgan": "^1.6.1",
+    "q": "^1.4.1",
+    "request": "^2.60.0"
   },
   "browserify": {
     "transform": [
