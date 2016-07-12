@@ -5,7 +5,9 @@ import Firebase from 'firebase'
 import middleware from './config/middleware.js'
 import utilities from './utilities/utilities.js'
 import initializeMeters from './init/initmeters.js'
+import getCrimes from './init/initcrimes.js'
 import setLocationParking from './parking/setParking.js'
+import SetCrimeScore from './crimes/crimeScore.js'
 
 const fb_keys = process.env.URL || require('./config/keys.js').url;
 let fb = new Firebase(fb_keys);
@@ -14,17 +16,18 @@ let usersRef = fb.child('Users');
 const app = express();
 middleware(app, express);
 
-app.set('port', process.env.PORT || 8080);
+const port = process.env.PORT || 8080;
 
 // initalize MeterParkingSpots Collection and hydrate with Santa Monica API parking meters
 app.get('/api/init', initializeMeters);
 
-  //Listen for a new user session and adds a user entry on firebase in the Users database
+//Listen for a new user session and adds a user entry on firebase in the Users database
 usersRef.on('child_added', setLocationParking);
 
+SetCrimeScore();
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
-app.listen(app.get('port'), function() {
-  console.log("Running on port ", app.get('port'));
+app.listen(port, () => {
+  console.log("Running on port: ", port);
 });
 
 export default app;
