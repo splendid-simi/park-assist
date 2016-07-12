@@ -1,6 +1,6 @@
 var locator = angular.module('parkAssist.locator');
 var Q = require('q');
-var fb_keys = "https://parkassistapp.firebaseio.com/";
+var fb_keys = "https://parkassist-app.firebaseio.com/";
 
 locator.factory('Locator', ['$http', function ($http) {
   console.log('creating a new user');
