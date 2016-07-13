@@ -9,6 +9,8 @@ import getCrimes from './init/initcrimes.js'
 import setLocationParking from './parking/setParking.js'
 import SetCrimeScore from './crimes/crimeScore.js'
 
+import crimeData from './crimedata.js'
+
 const fb_keys = process.env.URL || require('./config/keys.js').url;
 let fb = new Firebase(fb_keys);
 let usersRef = fb.child('Users');
@@ -24,7 +26,7 @@ app.get('/api/init', initializeMeters);
 //Listen for a new user session and adds a user entry on firebase in the Users database
 usersRef.on('child_added', setLocationParking);
 
-SetCrimeScore();
+SetCrimeScore(crimeData);
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 app.listen(port, () => {
   console.log("Running on port: ", port);
