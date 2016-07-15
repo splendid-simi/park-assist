@@ -1,11 +1,11 @@
 import Firebase from 'firebase'
-import fb_keys from './../config/keys.js'
-import geolib from './../lib/geolib.js'
+import fb_keys from './../../../config/keys.js'
+import geolib from './../../../lib/geolib.js'
 import geodesy from 'geodesy'
 import request  from 'request'
 import moment from 'moment'
 
-import hasValidUCRCode from './data/crimeratings.json'
+import hasValidUCRCode from './../data/crimeratings.json'
 
 let fb = new Firebase(fb_keys.url);
 let LatLon = geodesy.LatLonSpherical;

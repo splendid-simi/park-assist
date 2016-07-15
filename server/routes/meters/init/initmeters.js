@@ -1,7 +1,7 @@
 import express from 'express'
 import request  from 'request'
 import Firebase from 'firebase'
-import fb_keys from './../config/keys.js'
+import fb_keys from './../../../config/keys.js'
 
 const db = new Firebase(fb_keys.url);
 

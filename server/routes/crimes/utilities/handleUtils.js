@@ -1,11 +1,10 @@
-import requestUtils from './../utilities/requestUtils'
-import baseline from './initCrimes.js'
+import requestUtils from './../../../utilities/requestUtils'
+import baseline from './../init/initCrimes.js'
 
 const utilities = {
   handleSortCrimes(err, data) {
     requestUtils.handleRequestCallback(err, data, baseline.sortCrimes);
   },
-
   handleWriteCrimes(err, data) {
     requestUtils.handleRequestCallback(err, data, baseline.requestMoreCrimes);
   },

@@ -3,31 +3,31 @@ import request  from 'request'
 import moment from 'moment'
 import fs from 'fs'
 import path from 'path'
-import baseline from './../crimes/data/baseline.json'
-import requestUtils from './../utilities/requestUtils.js'
-import handleUtils from './handleUtils.js'
+import baseline from './../data/baseline.json'
+import requestUtils from './../../../utilities/requestUtils.js'
+import handleUtils from './../utilities/handleUtils.js'
 
 // db
 import Firebase from 'firebase'
-import fb_keys from './../config/keys.js'
+import fb_keys from './../../../config/keys.js'
 const db = new Firebase(fb_keys.url);
 
 let requestCount = 0;
 let lastCrimeDate = '';
 let endDate = (new Date().getFullYear()-1) + '-12-31'
 
-const initCrimes = (req,res) => {
+exports.initCrimes = (req,res) => {
   // get initial set of crimes
   getCrimes((err, data) => {
     handleUtils.handleInitCrimes(err, data, res);
   });
-  requestMoreCrimes();
+  exports.requestMoreCrimes();
 }
 
 const getCrimes = (callback) => {
   let url = buildCrimeQuery();
   requestCount++;
-
+  // console.log('*****INSIDE GET CRIMES******');
   request(url, (err, response, data) => {
     requestUtils.handleRequestCallback(err, JSON.parse(data), callback);
   });
@@ -46,7 +46,7 @@ const buildCrimeQuery = () => {
   return url + select + date + ucr + order;
 }
 
-const sortCrimes = (crimes) => {
+exports.sortCrimes = (err,crimes) => {
   lastCrimeDate = crimes[crimes.length-2]["date_occurred"].slice(0,10);
 
   // sort each crime by ucr crime type
@@ -61,12 +61,13 @@ const sortCrimes = (crimes) => {
 }
 
 const writeCrimesToFile = (baseline) => {
-  let pathName = path.join(__dirname + '/../crimes/data/baseline.json');
+  let pathName = path.join(__dirname + '/../data/baseline.json');
 
   fs.writeFile(pathName, JSON.stringify(baseline), 'utf-8', handleUtils.handleWriteCrimes);
 }
 
-const requestMoreCrimes = (err, data) => {
+exports.requestMoreCrimes = (err, data) => {
+  // console.log('err, data in requestMoreCrimes', err, data);
   if(lastCrimeDate < endDate) {
     // get additional crimes
     getCrimes(handleUtils.handleSortCrimes);
@@ -78,5 +79,3 @@ const requestMoreCrimes = (err, data) => {
 const onCrimeRequestsComplete = () => {
   console.log('crime requests complete. Total Requests Made:', requestCount);
 }
-
-export default initCrimes;
