@@ -1,6 +1,6 @@
 import Firebase from 'firebase'
 import fb_keys from './../config/keys.js'
-import utilities from './../utilities/utilities.js'
+import parkingUtils from './../utilities/parkingUtils.js'
 
 let fb = new Firebase(fb_keys.url);
 
@@ -19,7 +19,7 @@ const setLocationParking = (childSnapshot, prevChildKey) => {
     let freeSpots = {};
 
     for (var key in pSpots) {
-      let displacement = utilities.getDistance(tuple[0], tuple[1], pSpots[key].latitude, pSpots[key].longitude);
+      let displacement = parkingUtils.getDistance(tuple[0], tuple[1], pSpots[key].latitude, pSpots[key].longitude);
       // if parking spot is in range
       if (displacement < radius) {
         pSpots[key].distance = displacement;
