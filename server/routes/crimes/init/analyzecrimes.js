@@ -1,54 +1,17 @@
 import crimeByType from './../data/baseline.json'
+import analyzeUtils from './../utilities/analyzeUtils.js'
+import mathUtils from './../utilities/mathUtils.js'
 
-exports.getCrimesByMonth = (crimeByType) => {
-  let crimesByMonth = {};
-  each(crimeByType, (crimes, index) => {
-    each(crimes, (crime) => {
-      let month = crime["date_occurred"].slice(5,7);
-      if(!crimesByMonth[month]) {
-        crimesByMonth[month] = {};
-      }
-      crimesByMonth[month]["total_crimes"] = (crimesByMonth[month]["total_crimes"] || 0) + 1;
-    });
-  });
-  return crimesByMonth;
+exports.getBaselineScore = () => {
+  let crimesByMonth = mathUtils.getCrimesByMonth(crimeByType);
+
+  mathUtils.getMonthlyAverage(crimesByMonth);
+  mathUtils.getDailyAverage(crimesByMonth);
 }
 
-exports.getMonthlyAverage = (crimesByMonth) => {
-  let year = new Date().getFullYear();
-  each(crimesByMonth, (crimes, month) => {
-    let daysInMonth = getDaysInMonth(month, year);
-    crimes["average"] = Math.round(crimes["total_crimes"] / (daysInMonth * 3));
-  });
-  console.log('crimes by month with average:', crimesByMonth);
-  return crimesByMonth;
-}
+console.log('crime occurred in 72:', mathUtils.crimeOccurredin72Hours(crimeByType));
+// exports.getMonthlyAverage();
 
-exports.getDailyAverage = (crimesByMonth) => {
-  let total = Object.keys(crimesByMonth).reduce((sum, key) => {
-    return sum + crimesByMonth[key];
-  }, 0);
-  // divide by num of days in 3 years
-  return Math.round(total / 1095);
-}
-
-const getDaysInMonth = (month,year) => {
-    return new Date(year, month, 0).getDate();
-}
-
-const each = (collection, callback) => {
-  if(Array.isArray(collection)) {
-    for(var i = 0; i < collection.length; i++) {
-      callback(collection[i], i, collection);
-    }
-  } else {
-    for (var key in collection) {
-      callback(collection[key], key, collection);
-    }
-  }
-}
-
-exports.getMonthlyAverage(exports.getCrimesByMonth(crimeByType));
 // {
 //   '01': 682,
 //   '02': 498,
