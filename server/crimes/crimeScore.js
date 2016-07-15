@@ -75,7 +75,7 @@ const getCrimes = () => {
     let personalSafetyScore = 0;
     let numPersonalCrimes = 0;
     let numVehicleCrimes = 0;
-     
+
     crimes.forEach((crime) => {
       // if type of crime could affect parking safety
       let crimeList = {};
@@ -111,7 +111,7 @@ const getCrimes = () => {
   const getDateScore = (crime) => {
       let crimeDate = crime.slice(0,10);
       let highCrimePeriod = moment().add('weeks', 1).format('YYYY MM DD');
-      let midCrimePeriod = moment().add('months', 7).format('YYYY MM DD');
+      let midCrimePeriod = moment().add('months', 6).format('YYYY MM DD');
 
       if(crimeDate < highCrimePeriod) {
         console.log('inside 3');
