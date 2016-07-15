@@ -20,6 +20,10 @@ Longitude: 118°29′15″W    -118.48737442
 Final bearing: 90°00′07″   90.00194964
 Back bearing: 270°00′07″   270.00194964
 
+// google maps test coords
+34.02217069, -118.49782891
+34.01926895, -118.48737442
+
 // NW Point
 Latitude: 34°01′30″N      34.02507243
 Longitude: 118°29′52″W    -118.49782903
@@ -31,5 +35,3 @@ Latitude: 34°00′59″N       34.01636721
 Longitude: 118°29′27″W    -118.49085933
 Final bearing: 90°00′07″   90.00194943
 Back bearing: 270°00′07″   270.00194943
-
-https://data.smgov.net/resource/kn6p-4y74.json?$where=within_box(map_point, 34.02507243,-118.49782903,34.01636721,-118.49085933)
