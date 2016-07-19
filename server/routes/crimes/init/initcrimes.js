@@ -4,6 +4,7 @@ import moment from 'moment'
 import fs from 'fs'
 import path from 'path'
 import baseline from './../data/baseline.json'
+import getBaselineScore from './analyzeCrimes.js'
 import requestUtils from './../../../utilities/requestUtils.js'
 import handleUtils from './../utilities/handleUtils.js'
 
@@ -27,7 +28,6 @@ exports.initCrimes = (req,res) => {
 const getCrimes = (callback) => {
   let url = buildCrimeQuery();
   requestCount++;
-  // console.log('*****INSIDE GET CRIMES******');
   request(url, (err, response, data) => {
     requestUtils.handleRequestCallback(err, JSON.parse(data), callback);
   });
@@ -76,6 +76,7 @@ exports.requestMoreCrimes = (err, data) => {
   }
 }
 
-const onCrimeRequestsComplete = () => {
+exports.onCrimeRequestsComplete = () => {
   console.log('crime requests complete. Total Requests Made:', requestCount);
+  getBaselineScore();
 }
