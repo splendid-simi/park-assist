@@ -33,4 +33,6 @@ app.listen(port, () => {
   console.log("Running on port: ", port);
 });
 
+fb.child("MeteredParkingSpots").remove();
+
 export default app;

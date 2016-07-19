@@ -10,7 +10,6 @@ let userKey;
 const getSpots = (childSnapshot, prevChildKey) => {
   user = childSnapshot.val();
   userKey = childSnapshot.key();
-  console.log('USER KEY:', userKey)
 
   fb.child('MeteredParkingSpots').once('value', (parkingSpots) => {
     let pSpots = parkingSpots.val(); // get all parking meters
@@ -28,7 +27,7 @@ const getSpotsNearby = (pSpots, radius, tuple) => {
     // if parking spot is in range
     if (displacement < radius) {
       pSpots[key].distance = displacement;
-      if (pSpots[key].mostRecentEvent === 'SE' && counter < 15) {
+      if (pSpots[key].mostRecentEvent === 'SE' && counter <= 15) {
         freeSpots[key] = pSpots[key];
         counter++;
       }

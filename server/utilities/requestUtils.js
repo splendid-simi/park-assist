@@ -1,11 +1,12 @@
+
 const utilities = {
   send(res, status, body) {
-    res.statusCode = status
-    res.send(body)
+    res.statusCode = status;
+    res.send(body);
   },
   handleRequestCallback(err, data, callback) {
     if (err) {
-      console.log('error inside of getCrimes', err)
+      console.log('error:', err);
       return;
     }
     callback(null, data);
