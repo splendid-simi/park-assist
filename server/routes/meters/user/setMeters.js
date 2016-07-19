@@ -4,34 +4,43 @@ import parkingUtils from './../utilities/parkingUtils.js'
 
 let fb = new Firebase(fb_keys.url);
 
-const setLocationParking = (childSnapshot, prevChildKey) => {
-  let user = childSnapshot.val();
-  let userKey = childSnapshot.key();
+let user;
+let userKey;
 
-  //Use the user's coordinates to get a list of feasible spots
-  let radius = user.range;
-  let tuple = [user.latitude, user.longitude];
+const getSpots = (childSnapshot, prevChildKey) => {
+  user = childSnapshot.val();
+  userKey = childSnapshot.key();
+  console.log('USER KEY:', userKey)
 
-  //get spots
   fb.child('MeteredParkingSpots').once('value', (parkingSpots) => {
     let pSpots = parkingSpots.val(); // get all parking meters
-    let closeSpots = [];
-    let freeSpots = {};
-
-    for (var key in pSpots) {
-      let displacement = parkingUtils.getDistance(tuple[0], tuple[1], pSpots[key].latitude, pSpots[key].longitude);
-      // if parking spot is in range
-      if (displacement < radius) {
-        pSpots[key].distance = displacement;
-        if (pSpots[key].mostRecentEvent === 'SE') {
-          freeSpots[key] = pSpots[key];
-        }
-      }
-    }
-    //add list of recomendations to User in database
-    console.log('free spots:', freeSpots);
-    fb.child('Users').child(userKey).child('Recommendations').set(freeSpots);
+    getSpotsNearby(pSpots, user.range, [user.latitude, user.longitude]);
   });
 }
 
-export default setLocationParking;
+const getSpotsNearby = (pSpots, radius, tuple) => {
+  let freeSpots = {};
+  let counter = 0;
+
+  for (var key in pSpots) {
+    let displacement = parkingUtils.getDistance(tuple[0], tuple[1], pSpots[key].latitude, pSpots[key].longitude);
+
+    // if parking spot is in range
+    if (displacement < radius) {
+      pSpots[key].distance = displacement;
+      if (pSpots[key].mostRecentEvent === 'SE' && counter < 15) {
+        freeSpots[key] = pSpots[key];
+        counter++;
+      }
+    }
+  }
+  //add list of recomendations to User in database
+  console.log('free spots:', freeSpots);
+  setSpots(freeSpots);
+}
+
+const setSpots = (freeSpots) => {
+  fb.child('Users').child(userKey).child('Recommendations').set(freeSpots);
+}
+
+export default getSpots;

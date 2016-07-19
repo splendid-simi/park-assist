@@ -26,7 +26,7 @@ app.get('/api/crimes/init', crimes.onCrimeRequestsComplete);
 app.get('/api/parking/init', initMeters);
 
 //Listen for a new user session and adds a user entry on firebase in the Users database
-fb.child('Users').on('child_added', setCrimeScore);
+fb.child('Users').on('child_added', setMeters);
 
 //-----------------------------------------------------------------------------------------------------------------------------------------------------------
 app.listen(port, () => {
