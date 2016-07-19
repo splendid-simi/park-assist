@@ -15,22 +15,24 @@ const utilities = {
     return crimesByMonth;
   },
 
-  getMonthlyAverage(crimesByMonth) {
+  getMonthlyAverage(crimesByMonth, averageBy) {
     let year = new Date().getFullYear();
     analyzeUtils.each(crimesByMonth, (crimes, month) => {
       let daysInMonth = analyzeUtils.getDaysInMonth(month, year);
-      crimes["average"] = Math.round(crimes["total_crimes"] / (daysInMonth * 3));
+      crimes["average"] = Math.round(crimes["total_crimes"] / (daysInMonth * averageBy));
     });
     console.log('crimes by month with average:', crimesByMonth);
     return crimesByMonth;
   },
 
-  getDailyAverage(crimesByMonth) {
+  getDailyAverage(crimesByMonth, averageBy) {
+    console.log('crimesbyMonth:', JSON.stringify(crimesByMonth));
     let total = Object.keys(crimesByMonth).reduce((sum, key) => {
-      return sum + crimesByMonth[key];
+      return sum + crimesByMonth[key]["total_crimes"];
     }, 0);
+    console.log('daily average:', total, Math.round(total / averageBy))
     // divide by num of days in 3 years
-    return Math.round(total / 1095);
+    return Math.round(total / averageBy);
   },
 
   crimeOccurredin72Hours(crimes) {
