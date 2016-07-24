@@ -1,5 +1,7 @@
 .DS_Store
-firebaselink.js
+server/config/keys.js
 node_modules/
 client/lib/bower/
 client/dist/
+
+server/crimes/data/baseline.json

@@ -7,6 +7,8 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
   var firstSpotInitialized = false;
   var range = 0.2;
   var queue = [];
+  var parkingPic = '../img/parking.png'
+  var safetyScore;
 
   // If user leaves browser, remove user from db
   window.onbeforeunload = function(e) {
@@ -14,12 +16,13 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
       dbUser.set(null);
     }
   };
-  
+
   var setMeter = function(pSpot) {
     var spot = [pSpot.latitude, pSpot.longitude];
     meterLoc = new google.maps.LatLng(spot[0], spot[1]);
 
-    MeterMarkers.addMarker(map, true, meterLoc);
+
+    MeterMarkers.addMarker(map, true, meterLoc, parkingPic);
   };
 
   var findSpot = function(tuple, newDestination) {
@@ -70,7 +73,6 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
       .orderByChild('distance')
       .on('child_added', function(snapshot) {
         var pSpot = snapshot.val();
-
         // If user has a first spot, just push new spots on the queue
         if(firstSpotInitialized) {
           queue.push(pSpot);
@@ -79,7 +81,7 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
 
         firstSpotInitialized = true;
 
-        setMeter(pSpot);
+        setMeter(pSpot, parkingPic);
         User.setDestination(meterLoc);
 
         User.calcRoute()
@@ -89,8 +91,22 @@ map.factory('Map', ['Traffic', 'DirectionsDisplay', 'Geocoder', 'MapOptions', 'L
 
       });
 
+      dbUser
+      .child('Crime')
+      .child('SafetyScore')
+      .on('child_added', function(snapshot) {
+        safetyScore = snapshot.val();
+        getParkingPic(SafetyScore);
+      });
+
+
     });
   };
+
+  function getParkingPic() {
+    console.log('inside get parking pic');
+    parkingPic = '../img/parkingGreen.png';
+  }
 
   var getMap = function() {
     return map;
