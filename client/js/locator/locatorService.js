@@ -3,7 +3,6 @@ var Q = require('q');
 var fb_keys = "https://parkassist-app.firebaseio.com/";
 
 locator.factory('Locator', ['$http', function ($http) {
-  console.log('creating a new user');
   var createUser = function (tuple, range) {
     var deferred = Q.defer();
 
