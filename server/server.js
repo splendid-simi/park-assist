@@ -20,7 +20,7 @@ middleware(app, express);
 const port = process.env.PORT || 8080;
 
 // initalize baseline crime data
-app.get('/api/crimes/init', crimes.onCrimeRequestsComplete);
+app.get('/api/crimes/init', crimes.onCrimeRequestsComplete); //to initialize change crimes.onCrimeRequestComplete to crimes.initCrimes
 
 // initalize MeterParkingSpots Collection and hydrate with Santa Monica API parking meters
 app.get('/api/parking/init', initMeters);

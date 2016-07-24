@@ -34,7 +34,7 @@ const getSpotsNearby = (pSpots, radius, tuple) => {
     }
   }
   //add list of recomendations to User in database
-  console.log('recommended spots:', freeSpots);
+  // console.log('recommended spots:', freeSpots);
   setSpots(freeSpots);
 }
 
