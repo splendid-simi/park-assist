@@ -22,7 +22,7 @@ const initializeMeters = (req, res) => {
 }
 
 //One time update of the database with the metered spots info
-const setParkingMeters = (error, meters) => {
+const setParkingMeters = (meters) => {
   for (var key in meters) {
     let obj = meters[key];
     console.log("Value at",key, " is",meters[key]);

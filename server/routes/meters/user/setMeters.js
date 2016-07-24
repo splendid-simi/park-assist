@@ -13,6 +13,7 @@ const getSpots = (childSnapshot, prevChildKey) => {
 
   fb.child('MeteredParkingSpots').once('value', (parkingSpots) => {
     let pSpots = parkingSpots.val(); // get all parking meters
+    // console.log('parkingSpots in getSpots:', pSpots);
     getSpotsNearby(pSpots, user.range, [user.latitude, user.longitude]);
   });
 }
@@ -23,7 +24,6 @@ const getSpotsNearby = (pSpots, radius, tuple) => {
 
   for (var key in pSpots) {
     let displacement = parkingUtils.getDistance(tuple[0], tuple[1], pSpots[key].latitude, pSpots[key].longitude);
-
     // if parking spot is in range
     if (displacement < radius) {
       pSpots[key].distance = displacement;
@@ -34,7 +34,7 @@ const getSpotsNearby = (pSpots, radius, tuple) => {
     }
   }
   //add list of recomendations to User in database
-  console.log('free spots:', freeSpots);
+  console.log('recommended spots:', freeSpots);
   setSpots(freeSpots);
 }
 
