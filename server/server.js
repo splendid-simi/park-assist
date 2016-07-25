@@ -35,4 +35,6 @@ app.listen(port, () => {
 
 // fb.child("MeteredParkingSpots").remove();
 
+setCrimeScore();
+
 export default app;
